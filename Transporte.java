@@ -7,6 +7,10 @@ public abstract class Transporte {
 
     private EspacoPorto destino;
 
+    private enum estado {
+        PENDENTE, TRANSPORTANDO, CANCELADO, FINALIZADO;
+    }
+
     public Transporte(int identificador, EspacoPorto origem, EspacoPorto destino) {
         this.identificador = identificador;
         this.origem = origem;
