@@ -2,9 +2,9 @@ package TrabFinalPOO;
 
 public class TransporteMaterial extends Transporte{
     private String descricao;
-    private int carga;
+    private double carga;
 
-    public TransporteMaterial(int identificador, EspacoPorto origem, EspacoPorto destino, String descricao, int carga){
+    public TransporteMaterial(int identificador, EspacoPorto origem, EspacoPorto destino, String descricao, double carga){
         super(identificador, origem, destino);
         this.descricao = descricao;
         this.carga = carga;
