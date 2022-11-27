@@ -19,4 +19,14 @@ public class EspacoPorto {
         this.coordZ = coordZ;
     }
 
+    public double getCoordX(){
+        return coordX;
+    }
+    public double getCoordY(){
+        return coordY;
+    }
+    public double getCoordZ(){
+        return coordZ;
+    }
+
 }
