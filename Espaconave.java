@@ -9,4 +9,8 @@ public class Espaconave{
         this.nome = nome;
         this.localAtual = localAtual;
     }
+
+    public String getNome(){
+        return nome;
+    }
 }

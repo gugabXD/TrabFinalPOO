@@ -1,15 +1,19 @@
 package TrabFinalPOO;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class ACMESpace {
     private Scanner in;
+
+    Cadastros cadastros = new Cadastros();
     public ACMESpace(){
-       in = new Scanner(System.in);
+
+        in = new Scanner(System.in);
     }
     public void menu(){
         while(true) {
-            System.out.println("====================");
+            System.out.println("============================================================");
             System.out.println("Bem vindo ao menu ACMESpace, escolha uma das opções:");
             System.out.println("1 - Cadastrar novo espaço-porto");
             System.out.println("2 - Cadastrar nova espaçonave");
@@ -21,6 +25,7 @@ public class ACMESpace {
             System.out.println("8 - Salvar dados");
             System.out.println("9 - Carregar dados");
             System.out.println("0 - Finalizar sistema");
+            System.out.println("============================================================");
             int opcao = Integer.parseInt(in.nextLine());
             trataComando(opcao);
         }
@@ -29,7 +34,7 @@ public class ACMESpace {
         switch(opcao){
             case 0-> System.exit(0);
             case 1-> fazer();
-            case 2-> fazer();
+            case 2-> cadastraesp();
             case 3-> fazer();
             case 4-> fazer();
             case 5-> fazer();
@@ -43,4 +48,37 @@ public class ACMESpace {
         //só pros case nao encher o saco com erro xD xD
     }
 
+    public void cadastraesp(){
+        System.out.println("Por favor insira o nome da espaçonave:");
+        String nome = in.nextLine();
+        System.out.println("Por favor insira em qual espaço-porto a nave está:");
+        String local = in.nextLine();
+
+        if(cadastros.porcuraespaçoporto(local)==null){
+            System.out.println("=============================================================================");
+            System.out.println("Nenhum Espaço-porto encontrado com esse nome, deseja cadastrar como Terra?");
+            System.out.println("[1] - Sim.");
+            System.out.println("[2] - Não.");
+            System.out.println("=============================================================================");
+            int opção = in.nextInt();
+
+            if(opção==1){
+                Espaconave e = new Espaconave(nome , cadastros.porcuraespaçoporto("Terra"));
+                if(!cadastros.cadastraesp(e)){
+                    System.out.println("Espaçonave já existente.");
+                    return;
+                }
+                System.out.println("Espaço-porto cadastrado como Terra.");
+                return;
+            }
+            System.out.println("Voltando para o menu...");
+            menu();
+        }
+        Espaconave e = new Espaconave(nome, cadastros.porcuraespaçoporto(local));
+        if(!cadastros.cadastraesp(e)){
+            System.out.println("Espaçonave já existente.");
+            return;
+        }
+        System.out.println("Espaço porto cadastrado com sucesso");
+    }
 }

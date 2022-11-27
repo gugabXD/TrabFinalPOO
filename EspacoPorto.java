@@ -19,4 +19,43 @@ public class EspacoPorto {
         this.coordZ = coordZ;
     }
 
+    public int getNumero() {
+        return numero;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public double getCoordX() {
+        return coordX;
+    }
+
+    public void setCoordX(double coordX) {
+        this.coordX = coordX;
+    }
+
+    public double getCoordY() {
+        return coordY;
+    }
+
+    public void setCoordY(double coordY) {
+        this.coordY = coordY;
+    }
+
+    public double getCoordZ() {
+        return coordZ;
+    }
+
+    public void setCoordZ(double coordZ) {
+        this.coordZ = coordZ;
+    }
 }
