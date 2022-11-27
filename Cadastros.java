@@ -26,9 +26,9 @@ public class Cadastros {
         return true;
     }
 
-    public boolean cadastratrasp(Transporte t){
+   // public boolean cadastratrasp(Transporte t){
 
-    }
+    //}
 
     public EspacoPorto porcuraespaçoporto(String nome){
         for(EspacoPorto p : cadesport){

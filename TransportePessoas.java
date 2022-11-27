@@ -8,12 +8,21 @@ public class TransportePessoas extends Transporte{
         this.quantPessoas = quantPessoas;
     }
     @Override
-    public double calculaCusto() {
-        return 0;
+    public double calculaDistancia() {
+        EspacoPorto origem = getOrigem();
+        EspacoPorto destino = getDestino();
+        double distsquare = Math.pow((origem.getCoordX()-destino.getCoordX()),2)+Math.pow((origem.getCoordY()-destino.getCoordY()),2)+Math.pow((origem.getCoordZ()-destino.getCoordZ()),2);
+        return Math.sqrt(distsquare);
     }
 
     @Override
-    public double calculaDistancia() {
-        return 0;
+    public double calculaCusto() {
+        double custoDist, custoTransp, fatorDist;
+        double distancia = getDistancia();
+        if(distancia<0.5) fatorDist = 1000000;
+        else fatorDist = 100;
+        custoDist = fatorDist * distancia;
+        custoTransp = quantPessoas * 100;
+        return custoDist * custoTransp;
     }
 }
