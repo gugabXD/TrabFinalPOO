@@ -8,7 +8,7 @@ public abstract class Transporte {
     private EspacoPorto destino;
     public double distancia;
 
-    private enum Estado {
+    enum Estado {
         PENDENTE, TRANSPORTANDO, CANCELADO, FINALIZADO;
     }
     private Estado e;
@@ -41,5 +41,9 @@ public abstract class Transporte {
 
     public double getDistancia() {
         return distancia;
+    }
+
+    public Estado getEstado() {
+        return e;
     }
 }
