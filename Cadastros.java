@@ -26,9 +26,26 @@ public class Cadastros {
         return true;
     }
 
-   // public boolean cadastratrasp(Transporte t){
+   public boolean cadastratrasp(Transporte t){
+        for(Transporte p : cadtrans){
+            if(p.getIdentificador()== t.getIdentificador()){
+                return false;
+            }
+        }
+        cadtrans.add(t);
+        return true;
+    }
 
-    //}
+    public boolean cadastraEspaçoPort(EspacoPorto e){
+        for(EspacoPorto p : cadesport){
+            if (p.getNumero() == e.getNumero()){
+                return false;
+
+            }
+        }
+        cadesport.add(e);
+        return true;
+    }
 
     public EspacoPorto porcuraespaçoporto(String nome){
         for(EspacoPorto p : cadesport){
