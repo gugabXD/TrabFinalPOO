@@ -40,7 +40,7 @@ public class EspacoPorto {
 
     public String toString(){
         String s = "Espaço-Porto " +nome+ ", de número "+numero+", disposto nas coordenadas: "+
-                "("+coordX+","+coordY+","+coordZ+")\n";
+                "("+coordX+";"+coordY+";"+coordZ+")\n";
         return s;
 
     }
