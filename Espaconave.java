@@ -15,6 +15,10 @@ public class Espaconave{
         this.localAtual = localAtual;
     }
 
+    public String geraResumo(){
+        return nome + ";" + localAtual.getNumero() + ";";
+    }
+
     public String getNome(){
         return nome;
     }

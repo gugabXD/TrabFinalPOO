@@ -19,6 +19,10 @@ public class EspacoPorto {
         this.coordZ = coordZ;
     }
 
+    public String geraResumo(){
+        return numero + ";" + nome + ";" + coordX + ";" + coordY + ";" + coordZ + ";";
+    }
+
     public int getNumero() {
         return numero;
     }

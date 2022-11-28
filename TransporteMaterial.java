@@ -9,6 +9,10 @@ public class TransporteMaterial extends Transporte{
         this.descricao = descricao;
         this.carga = carga;
     }
+    @Override
+    public String geraResumo(){
+        return descricao + ";" + carga;
+    }
 
     @Override
     public double calculaDistancia() {

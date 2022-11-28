@@ -20,6 +20,7 @@ public abstract class Transporte {
         distancia = calculaDistancia();
         e = Estado.PENDENTE;
     }
+    public abstract String geraResumo();
 
     public abstract double calculaDistancia();
 
