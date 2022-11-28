@@ -1,5 +1,6 @@
 package TrabFinalPOO;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -57,18 +58,22 @@ public class Cadastros {
         return null;
     }
 
-    public void consultaTransp(){
-        if(cadTransp.isEmpty()){
-            System.out.println("Erro. Não há nenhum transporte.");
-            return;
-        }
-        cadTransp.stream().forEach(c -> System.out.println(c));
+    public ArrayList<Transporte> consultaTransp(){
+        ArrayList<Transporte> aux = new ArrayList<>();
+        if(cadTransp.isEmpty()) return null;
+        cadTransp.stream().forEach(t -> aux.add(t));
+        return aux;
     }
     public Transporte procuraTransp(int ident){
         for(Transporte t: cadTransp){
             if(t.getIdentificador()==ident) return t;
         }
         return null;
+    }
+
+    public boolean associar(Transporte t){
+        
+        return true;
     }
 
 }

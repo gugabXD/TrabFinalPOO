@@ -31,7 +31,7 @@ public class TransportePessoas extends Transporte{
                 "De origem em: "+getOrigem().toString()+"E destino em: "+getDestino().toString()+
                 "Distancia de "+getDistancia()+" anos luz e custo de "+calculaCusto()+" C$\n"+
                 "Estado: "+getEstado()+"\n";
-        //if(getEstado()!=Estado.PENDENTE) s+= getNave().toString();
+        //if(getEstado()!="PENDENTE") s+= getNave().toString();
         return s;
     }
 }

@@ -1,5 +1,7 @@
 package TrabFinalPOO;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ACMESpace {
@@ -30,7 +32,7 @@ public class ACMESpace {
             int opcao = Integer.parseInt(in.nextLine());
             trataComando(opcao);
          } catch(Exception e) {
-            System.err.print(e);
+            System.err.print(e+"\n");
         }
         }
     }
@@ -41,7 +43,7 @@ public class ACMESpace {
             case 2-> cadastraEspacoNave();
             case 3-> cadastraTransp();
             case 4-> consultaTransp();
-            case 5-> fazer();
+            case 5-> alteraEstado();
             case 6-> fazer();
             case 7-> fazer();
             case 8-> fazer();
@@ -143,6 +145,10 @@ public class ACMESpace {
             System.out.println("Erro. Destino inválido");
             return;
         }
+        if(origem==destino){
+            System.out.println("Erro. Origem e destino iguais");
+            return;
+        }
         System.out.println("Insira a quantidade de pessoas transportadas");
         int quantPessoas = Integer.parseInt(in.nextLine());
         Transporte tp = new TransportePessoas(ident, origem, destino, quantPessoas);
@@ -165,6 +171,10 @@ public class ACMESpace {
             System.out.println("Erro. Destino inválido");
             return;
         }
+        if(origem==destino){
+            System.out.println("Erro. Origem e destino iguais");
+            return;
+        }
         System.out.println("Insira a descrição do material transportado");
         String descricao = in.nextLine();
         System.out.println("Insira a carga em toneladas de material a ser transportado");
@@ -175,8 +185,59 @@ public class ACMESpace {
         System.out.println(tm);
     }
 
+    public void alteraEstado(){
+        System.out.println("Insira o identificador do transporte");
+        int ident = Integer.parseInt(in.nextLine());
+        Transporte t = c.procuraTransp(ident);
+        if(t==null){
+            System.out.println("Erro. Transporte inexistente.");
+            return;
+        }
+        String estado = t.getEstado();
+        if(estado.equals("CANCELADO") || t.getEstado().equals("FINALIZADO")) {
+            System.out.println("Erro. Estado imutável.");
+            return;
+        }
+        else if(estado.equals("PENDENTE")){
+            System.out.println("===============");
+            System.out.println("TRANSPORTE PENDENTE");
+            System.out.println("Escolha o novo estado do transporte (ou um valor diferente para cancelar a operação)");
+            System.out.println("[1] - TRANSPORTANDO");
+            System.out.println("[2] - CANCELADO");
+            System.out.println("===============");
+            int opcao = Integer.parseInt(in.nextLine());
+            switch(opcao){
+                case 1-> c.associar(t);
+                case 2-> t.setEstado(2);
+                default -> {
+                    System.out.println("Opção inválida. Operação cancelada.");;
+                }
+            }
+        }
+        else {
+            System.out.println("===============");
+            System.out.println("TRANSPORTE EM ANDAMENTO");
+            System.out.println("Escolha o novo estado do transporte (ou um valor diferente para cancelar a operação)");
+            System.out.println("[1] - FINALIZADO");
+            System.out.println("[2] - CANCELADO");
+            System.out.println("===============");
+            int opcao = Integer.parseInt(in.nextLine());
+            switch(opcao){
+                case 1-> t.setEstado(4);
+                case 2-> t.setEstado(2);
+                default -> {
+                    System.out.println("Opção inválida. Operação cancelada.");
+                }
+            }
+        }
 
+    }
     public void consultaTransp(){
-        c.consultaTransp();
+        ArrayList<Transporte> lista = c.consultaTransp();
+        if(lista==null){
+            System.out.println("Erro. Não há nenhum transporte cadastrado");
+            return;
+        }
+        lista.stream().forEach(t -> System.out.println(t));
     }
 }
