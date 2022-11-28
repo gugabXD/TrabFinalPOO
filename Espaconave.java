@@ -10,7 +10,6 @@ public class Espaconave{
 
     private ArrayList<Transporte> historico;
 
-
     public Espaconave(String nome, EspacoPorto localAtual) {
         this.nome = nome;
         this.localAtual = localAtual;

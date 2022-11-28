@@ -1,60 +1,67 @@
 package TrabFinalPOO;
 
-import TrabFinalPOO.EspacoPorto;
-import TrabFinalPOO.Espaconave;
-import TrabFinalPOO.Transporte;
-
 import java.util.ArrayList;
 
 public class Cadastros {
-    ArrayList<Espaconave> cadesp = new ArrayList<>();
-    ArrayList<Transporte> cadtrans = new ArrayList<>();
-    ArrayList<EspacoPorto> cadesport = new ArrayList<>();
+    private ArrayList<Espaconave> cadEspNave;
+    private ArrayList<Transporte> cadTransp;
+    private ArrayList<EspacoPorto> cadEspPort;
+
+    public Cadastros(){
+        cadEspNave = new ArrayList<>();
+        cadTransp = new ArrayList<>();
+        cadEspPort = new ArrayList<>();
+    }
 
     public void precadastraTerra(){
         EspacoPorto Terra = new EspacoPorto(0000, "Terra", 0000, 0000, 0000 );
-        cadesport.add (Terra);
+        cadEspPort.add (Terra);
     }
 
     public boolean cadastraesp(Espaconave e){
-        for(Espaconave p : cadesp){
+        for(Espaconave p : cadEspNave){
             if(p.getNome().equalsIgnoreCase(e.getNome())){
                 return false;
             }
         }
-        cadesp.add(e);
+        cadEspNave.add(e);
         return true;
     }
 
-   public boolean cadastratrasp(Transporte t){
-        for(Transporte p : cadtrans){
+   public boolean cadastraTransp(Transporte t){
+        for(Transporte p : cadTransp){
             if(p.getIdentificador()== t.getIdentificador()){
                 return false;
             }
         }
-        cadtrans.add(t);
+        cadTransp.add(t);
         return true;
     }
 
     public boolean cadastraEspaçoPort(EspacoPorto e){
-        for(EspacoPorto p : cadesport){
+        for(EspacoPorto p : cadEspPort){
             if (p.getNumero() == e.getNumero()){
                 return false;
 
             }
         }
-        cadesport.add(e);
+        cadEspPort.add(e);
         return true;
     }
 
-    public EspacoPorto porcuraespaçoporto(String nome){
-        for(EspacoPorto p : cadesport){
-            if (p.getNome().equalsIgnoreCase(nome)){
-                return p;
-
-            }
+    public EspacoPorto procuraEspacoPorto(int identificador){
+        for(EspacoPorto e: cadEspPort){
+            if(e.getNumero()==identificador) return e;
         }
         return null;
+    }
+
+    public void consultaTransp(){
+        if(cadTransp.isEmpty()){
+            System.out.println("Erro. Não há nenhum transporte.");
+            return;
+        }
+        cadTransp.stream().forEach(c -> c.toString());
     }
 }
 
