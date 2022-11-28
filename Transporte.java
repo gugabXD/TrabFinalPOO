@@ -46,7 +46,15 @@ public abstract class Transporte {
         return distancia;
     }
 
-    public Estado getEstado() {
-        return e;
+    public String getEstado() {
+        return e.toString();
+    }
+    public void setEstado(int estado){
+        switch(estado){
+            case 1-> e = Estado.PENDENTE;
+            case 2-> e = Estado.CANCELADO;
+            case 3-> e = Estado.TRANSPORTANDO;
+            case 4-> e = Estado.FINALIZADO;
+        }
     }
 }
