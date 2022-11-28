@@ -67,7 +67,7 @@ public class Cadastros {
         cadTransp.stream().forEach(c -> System.out.println(c));
     }
 
-    public boolean salvaDadosArquivo(String nomeArquivo) {
+    public boolean salvaDadosArquivoCSV(String nomeArquivo) {
         String linha = "";
 
         try{
@@ -83,6 +83,36 @@ public class Cadastros {
             }
             for(Transporte t : cadTransp){
                 linha = (t.geraResumo() + "\n");
+                bf.write(linha);
+            }
+            bf.close();
+            return true;
+        }
+        catch (Exception e ){
+            System.out.println("Não foi possível criar o arquivo.");
+            return false;
+        }
+    }
+
+    public boolean salvaDadosArquivoXML(String nomeArquivo) {
+        String linha = "";
+
+        try{
+            FileWriter arq = new FileWriter(nomeArquivo);
+            BufferedWriter bf = new BufferedWriter(arq);
+            bf.write("-<EspacoPorto>" + "\n");
+            for(EspacoPorto p : cadEspPort){
+                linha = (p.geraResumoXML() + "\n");
+                bf.write(linha);
+            }
+            bf.write("-<Espaconave>" + "\n");
+            for(Espaconave e : cadEspNave){
+                linha = (e.geraResumoXML() + "\n");
+                bf.write(linha);
+            }
+            bf.write("-<Transporte>" + "\n");
+            for(Transporte t : cadTransp){
+                linha = (t.geraResumoXML() + "\n");
                 bf.write(linha);
             }
             bf.close();

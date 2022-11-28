@@ -23,6 +23,10 @@ public class EspacoPorto {
         return numero + ";" + nome + ";" + coordX + ";" + coordY + ";" + coordZ + ";";
     }
 
+    public String geraResumoXML(){
+        return "<numero>" + numero + "</numero>" + "\n" + "<nome>" + nome + "</nome>"  + "\n" + "<coordX>" + coordX + "</coordX>" + "\n" + "<coordY>" + coordY + "</coordY>" + "\n" + "<coordZ>" + coordZ + "</coordZ>";
+    }
+
     public int getNumero() {
         return numero;
     }

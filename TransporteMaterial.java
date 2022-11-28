@@ -11,7 +11,11 @@ public class TransporteMaterial extends Transporte{
     }
     @Override
     public String geraResumo(){
-        return descricao + ";" + carga;
+        return getIdentificador()+ ";" + getOrigem()+ ";" + getDestino() + ";"+ descricao + ";" + carga;
+    }
+    @Override
+    public String geraResumoXML(){
+        return "<identificador>" + getIdentificador() + "</identificador>" + "\n" + "<origem>" + getOrigem() + "</origem>" + "\n" + "<destino>" + getDestino() + "</destino>"+ "\n" + "<descricao>" + descricao + "</descricao>" + "\n" + "<carga>" + carga + "</carga>";
     }
 
     @Override

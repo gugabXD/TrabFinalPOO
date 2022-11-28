@@ -19,6 +19,10 @@ public class Espaconave{
         return nome + ";" + localAtual.getNumero() + ";";
     }
 
+    public String geraResumoXML(){
+        return "<nome>" + nome + "</nome>"  + "\n" + "<LocalAtualNumero>" + localAtual.getNumero() + "</LocalAtualNumero>";
+    }
+
     public String getNome(){
         return nome;
     }

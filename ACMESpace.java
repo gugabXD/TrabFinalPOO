@@ -53,15 +53,44 @@ public class ACMESpace {
     }
 
     public void salvaDados(){
+        System.out.println("==================================================================");
+        System.out.println("Por favor, selecione qual formato gostaria de salvar o aqruivo.");
+        System.out.println("[1] - CSV");
+        System.out.println("[2] - XML ");
+        System.out.println("==================================================================");
+        int opcao = Integer.parseInt(in.nextLine());
+
+        if(opcao==1){
+            salvaDadosCsv();
+        }
+        if(opcao==2){
+            salvaDadosXML();
+        }
+    }
+
+    public void salvaDadosCsv(){
         System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
         String nome;
         nome = in.nextLine();
-        if(c.salvaDadosArquivo(nome)) {
+        if(c.salvaDadosArquivoCSV(nome)) {
             System.out.println("Arquivo criado com sucesso.");
             return;
 
         }
         System.out.println("Não foi possível criar o arquivo.");
+    }
+
+    public void salvaDadosXML(){
+        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
+        String nome;
+        nome = in.nextLine();
+        if(c.salvaDadosArquivoXML(nome)) {
+            System.out.println("Arquivo criado com sucesso.");
+            return;
+
+        }
+        System.out.println("Não foi possível criar o arquivo.");
+
     }
 
     public void cadastraEspacoNave(){

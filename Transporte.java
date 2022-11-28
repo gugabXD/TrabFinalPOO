@@ -22,6 +22,8 @@ public abstract class Transporte {
     }
     public abstract String geraResumo();
 
+    public abstract String geraResumoXML();
+
     public abstract double calculaDistancia();
 
     public abstract double calculaCusto();
