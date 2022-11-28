@@ -72,7 +72,7 @@ public class ACMESpace {
                 return;
             }
             System.out.println("Voltando para o menu...");
-            menu();
+            return;
         }
         Espaconave e = new Espaconave(nome, cadastros.porcuraespaçoporto(local));
         if(!cadastros.cadastraesp(e)){

@@ -11,13 +11,14 @@ public abstract class Transporte {
     private enum Estado {
         PENDENTE, TRANSPORTANDO, CANCELADO, FINALIZADO;
     }
+    private Estado e;
 
     public Transporte(int identificador, EspacoPorto origem, EspacoPorto destino) {
         this.identificador = identificador;
         this.origem = origem;
         this.destino = destino;
         distancia = calculaDistancia();
-        Estado e = Estado.PENDENTE;
+        e = Estado.PENDENTE;
     }
 
     public abstract double calculaDistancia();
