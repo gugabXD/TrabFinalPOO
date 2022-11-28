@@ -29,6 +29,10 @@ public abstract class Transporte {
         return destino;
     }
 
+    public int getIdentificador(){
+        return identificador;
+    }
+
     public EspacoPorto getOrigem() {
         return origem;
     }

@@ -33,9 +33,9 @@ public class ACMESpace {
     public void trataComando(int opcao){
         switch(opcao){
             case 0-> System.exit(0);
-            case 1-> fazer();
+            case 1-> cadastraEspaçoPort();
             case 2-> cadastraesp();
-            case 3-> fazer();
+            //case 3-> cadasdtraTransp();
             case 4-> fazer();
             case 5-> fazer();
             case 6-> fazer();
@@ -81,4 +81,48 @@ public class ACMESpace {
         }
         System.out.println("Espaço porto cadastrado com sucesso");
     }
+
+    public void cadastraEspaçoPort(){
+        System.out.println("Por favor, insira o número:");
+        int numero = in.nextInt();
+        System.out.println("Por favor, insira o nome:");
+        String nome = in.nextLine();
+        System.out.println("Por favor, insira o cordenada X:");
+        double x = in.nextDouble();
+        System.out.println("Por favor, insira o cordenada Y:");
+        double y = in.nextDouble();
+        System.out.println("Por favor, insira o cordenada Z:");
+        double z = in.nextDouble();
+
+
+        EspacoPorto e = new EspacoPorto(numero, nome, x , y , z );
+
+        if(!cadastros.cadastraEspaçoPort(e)){
+            System.out.println("Espaçonave já existente.");
+            return;
+        }
+        System.out.println("Espaço porto cadastrado com sucesso");
+
+    }
+
+    /*
+    public void cadasdtraTransp(){
+        System.out.println("=============================");
+        System.out.println("Insira o tipo do transporte:");
+        System.out.println("[1] - Transporte de pessoas.");
+        System.out.println("[2] - Transporte de materais");
+        System.out.println("=============================");
+
+        int opção = in.nextInt();
+
+        if(opção == 1){
+            System.out.println("Por favor insira o identificador:");
+            int identificador = in.nextInt();
+
+
+        }
+
+    }
+
+     */
 }
