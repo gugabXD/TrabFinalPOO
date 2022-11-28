@@ -54,7 +54,7 @@ public class ACMESpace {
 
     public void salvaDados(){
         System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
-        String nome = in.nextLine();
+        String nome;
         nome = in.nextLine();
         if(c.salvaDadosArquivo(nome)) {
             System.out.println("Arquivo criado com sucesso.");
