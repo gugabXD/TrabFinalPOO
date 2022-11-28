@@ -17,12 +17,12 @@ public class TransportePessoas extends Transporte{
 
     @Override
     public String geraResumo(){
-        return getIdentificador()+ ";" + getOrigem()+ ";" + getDestino() + quantPessoas + ";";
+        return getIdentificador()+ ";" + getOrigem().getNome()+ ";" + getDestino().getNome() + quantPessoas + ";";
     }
 
     @Override
     public String geraResumoXML(){
-        return "<identificador>" + getIdentificador() + "</identificador>" + "\n" + "<origem>" + getOrigem() + "</origem>" + "\n" + "<destino>" + getDestino() + "</destino>"+ "\n" + "<quantpessoas>" + quantPessoas + "</quantpessoas>";
+        return "<identificador>" + getIdentificador() + "</identificador>" + "\n" + "<origem>" + getOrigem().getNome() + "</origem>" + "\n" + "<destino>" + getDestino().getNome() + "</destino>"+ "\n" + "<quantpessoas>" + quantPessoas + "</quantpessoas>";
     }
 
     @Override
