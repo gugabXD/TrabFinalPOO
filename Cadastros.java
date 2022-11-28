@@ -1,6 +1,7 @@
 package TrabFinalPOO;
 
-import java.lang.reflect.Array;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -64,6 +65,34 @@ public class Cadastros {
         cadTransp.stream().forEach(t -> aux.add(t));
         return aux;
     }
+
+    public boolean salvaDadosArquivo(String nomeArquivo) {
+        String linha = "";
+
+        try{
+            FileWriter arq = new FileWriter(nomeArquivo);
+            BufferedWriter bf = new BufferedWriter(arq);
+            for(EspacoPorto p : cadEspPort){
+                linha = (p.geraResumo() + "\n");
+                bf.write(linha);
+            }
+            for(Espaconave e : cadEspNave){
+                linha = (e.geraResumo() + "\n");
+                bf.write(linha);
+            }
+            for(Transporte t : cadTransp){
+                linha = (t.geraResumo() + "\n");
+                bf.write(linha);
+            }
+            bf.close();
+            return true;
+        }
+        catch (Exception e ){
+            System.out.println("Não foi possível criar o arquivo.");
+            return false;
+        }
+    }
+
     public Transporte procuraTransp(int ident){
         for(Transporte t: cadTransp){
             if(t.getIdentificador()==ident) return t;

@@ -46,12 +46,24 @@ public class ACMESpace {
             case 5-> alteraEstado();
             case 6-> fazer();
             case 7-> fazer();
-            case 8-> fazer();
+            case 8-> salvaDados();
             case 9-> fazer();
         }
     }
     public void fazer(){
         //só pros case nao encher o saco com erro xD xD
+    }
+
+    public void salvaDados(){
+        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
+        String nome;
+        nome = in.nextLine();
+        if(c.salvaDadosArquivo(nome)) {
+            System.out.println("Arquivo criado com sucesso.");
+            return;
+
+        }
+        System.out.println("Não foi possível criar o arquivo.");
     }
 
     public void cadastraEspacoNave(){

@@ -16,6 +16,11 @@ public class TransportePessoas extends Transporte{
     }
 
     @Override
+    public String geraResumo(){
+        return quantPessoas + ";";
+    }
+
+    @Override
     public double calculaCusto() {
         double custoDist, custoTransp, fatorDist;
         double distancia = getDistancia();
