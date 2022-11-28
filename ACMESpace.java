@@ -13,7 +13,7 @@ public class ACMESpace {
         menu();
     }
     public void menu(){
-        try{ while(true) {
+        while(true) {try{
             System.out.println("============================================================");
             System.out.println("Bem vindo ao menu ACMESpace, escolha uma das opções:");
             System.out.println("1 - Cadastrar novo espaço-porto");
@@ -29,8 +29,9 @@ public class ACMESpace {
             System.out.println("============================================================");
             int opcao = Integer.parseInt(in.nextLine());
             trataComando(opcao);
-         }} catch(Exception e){
+         } catch(Exception e) {
             System.err.print(e);
+        }
         }
     }
     public void trataComando(int opcao){
@@ -38,7 +39,7 @@ public class ACMESpace {
             case 0-> System.exit(0);
             case 1-> cadastraEspaçoPorto();
             case 2-> cadastraEspacoNave();
-            //case 3-> cadasdtraTransp();
+            case 3-> cadastraTransp();
             case 4-> consultaTransp();
             case 5-> fazer();
             case 6-> fazer();
@@ -75,7 +76,7 @@ public class ACMESpace {
             System.out.println("[1] - Sim.");
             System.out.println("[2] - Não.");
             System.out.println("=============================================================================");
-            int opção = in.nextInt();
+            int opção = Integer.parseInt(in.nextLine());
 
             if(opção==1){
                 Espaconave e = new Espaconave(nome , c.procuraEspacoPorto(0));
@@ -91,14 +92,14 @@ public class ACMESpace {
         }
         Espaconave e = new Espaconave(nome, c.procuraEspacoPorto(espPorto));
         if(!c.cadastraesp(e)){
-            System.out.println("Espaçonave já existente.");
+            System.out.println("Erro. Espaçonave já existente.");
             return;
         }
-        System.out.println("Espaço porto cadastrado com sucesso");
+        System.out.println("Espaço-porto cadastrado com sucesso");
     }
 
     public void cadastraEspaçoPorto(){
-        System.out.println("Por favor, insira o número:");
+        System.out.println("Por favor, insira o número do Espaço-Porto:");
         int numero = Integer.parseInt(in.nextLine());
         System.out.println("Por favor, insira o nome:");
         String nome = in.nextLine();
@@ -112,32 +113,80 @@ public class ACMESpace {
         EspacoPorto e = new EspacoPorto(numero, nome, x , y , z );
 
         if(!c.cadastraEspaçoPort(e)){
-            System.out.println("Espaçonave já existente.");
+            System.out.println("Erro. Espaço-Porto já existente.");
             return;
         }
-        System.out.println("Espaço porto cadastrado com sucesso");
+        System.out.println("Espaço-porto cadastrado com sucesso");
 
     }
 
-    /*
-    public void cadasdtraTransp(){
+    public void cadastraTransp(){
+        System.out.println("Insira o identificador do transporte");
+        int ident = Integer.parseInt(in.nextLine());
+        if(c.procuraTransp(ident)!=null){
+            System.out.println("Erro. Transporte já existente.");
+            return;
+        }
         System.out.println("=============================");
         System.out.println("Insira o tipo do transporte:");
-        System.out.println("[1] - Transporte de pessoas.");
+        System.out.println("[1] - Transporte de pessoas");
         System.out.println("[2] - Transporte de materais");
         System.out.println("=============================");
-
-        int opção = in.nextInt();
-
-        if(opção == 1){
-            System.out.println("Por favor insira o identificador:");
-            int identificador = in.nextInt();
-
-
-        }
-
+        int opcao;
+        do { opcao = Integer.parseInt(in.nextLine());
+        switch(opcao){
+            case 1-> cadastraTranspP(ident);
+            case 2-> cadastraTranspM(ident);
+            default -> System.out.println("Insira uma opção válida.");
+        } } while(opcao!=1 && opcao!=2);
     }
-     */
+    public void cadastraTranspP(int ident){
+        System.out.println("Insira o número do Espaço-Porto de origem");
+        int o = Integer.parseInt(in.nextLine());
+        EspacoPorto origem = c.procuraEspacoPorto(o);
+        if(origem==null){
+            System.out.println("Erro. Origem inválida");
+            return;
+        }
+        System.out.println("Insira o número do Espaço-Porto de destino");
+        int d = Integer.parseInt(in.nextLine());
+        EspacoPorto destino = c.procuraEspacoPorto(d);
+        if(destino==null){
+            System.out.println("Erro. Destino inválido");
+            return;
+        }
+        System.out.println("Insira a quantidade de pessoas transportadas");
+        int quantPessoas = Integer.parseInt(in.nextLine());
+        Transporte tp = new TransportePessoas(ident, origem, destino, quantPessoas);
+        c.cadastraTransp(tp);
+        System.out.println("Transporte cadastrado com sucesso!");
+        System.out.println(tp);
+    }
+    public void cadastraTranspM(int ident){
+        System.out.println("Insira o número do Espaço-Porto de origem");
+        int o = Integer.parseInt(in.nextLine());
+        EspacoPorto origem = c.procuraEspacoPorto(o);
+        if(origem==null){
+            System.out.println("Erro. Origem inválida");
+            return;
+        }
+        System.out.println("Insira o número do Espaço-Porto de destino");
+        int d = Integer.parseInt(in.nextLine());
+        EspacoPorto destino = c.procuraEspacoPorto(d);
+        if(destino==null){
+            System.out.println("Erro. Destino inválido");
+            return;
+        }
+        System.out.println("Insira a descrição do material transportado");
+        String descricao = in.nextLine();
+        System.out.println("Insira a carga em toneladas de material a ser transportado");
+        double carga = Double.parseDouble(in.nextLine());
+        Transporte tm = new TransporteMaterial(ident, origem, destino, descricao, carga);
+        c.cadastraTransp(tm);
+        System.out.println("Transporte cadastrado com sucesso!");
+        System.out.println(tm);
+    }
+
 
     public void consultaTransp(){
         c.consultaTransp();

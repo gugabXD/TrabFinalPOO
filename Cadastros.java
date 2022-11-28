@@ -3,16 +3,22 @@ package TrabFinalPOO;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Cadastros {
     private ArrayList<Espaconave> cadEspNave;
     private ArrayList<Transporte> cadTransp;
     private ArrayList<EspacoPorto> cadEspPort;
 
+    private Queue<Transporte> filaPendente;
+
     public Cadastros(){
         cadEspNave = new ArrayList<>();
         cadTransp = new ArrayList<>();
         cadEspPort = new ArrayList<>();
+        filaPendente = new LinkedList<>();
+        precadastraTerra();
     }
 
     public void precadastraTerra(){
@@ -30,14 +36,9 @@ public class Cadastros {
         return true;
     }
 
-   public boolean cadastraTransp(Transporte t){
-        for(Transporte p : cadTransp){
-            if(p.getIdentificador()== t.getIdentificador()){
-                return false;
-            }
-        }
+   public void cadastraTransp(Transporte t){
         cadTransp.add(t);
-        return true;
+        filaPendente.add(t);
     }
 
     public boolean cadastraEspaçoPort(EspacoPorto e){
@@ -63,7 +64,7 @@ public class Cadastros {
             System.out.println("Erro. Não há nenhum transporte.");
             return;
         }
-        cadTransp.stream().forEach(c -> c.toString());
+        cadTransp.stream().forEach(c -> System.out.println(c));
     }
 
     public boolean salvaDadosArquivo(String nomeArquivo) {
@@ -92,6 +93,14 @@ public class Cadastros {
             return false;
         }
     }
+
+    public Transporte procuraTransp(int ident){
+        for(Transporte t: cadTransp){
+            if(t.getIdentificador()==ident) return t;
+        }
+        return null;
+    }
+
 }
 
 

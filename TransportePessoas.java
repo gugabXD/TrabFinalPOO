@@ -32,7 +32,7 @@ public class TransportePessoas extends Transporte{
     }
     @Override
     public String toString() {
-        String s = "Transporte de pessoas de capacidade para "+quantPessoas+"\n"+
+        String s = "Transporte de pessoas para "+quantPessoas+"\n"+
                 "De origem em: "+getOrigem().toString()+"E destino em: "+getDestino().toString()+
                 "Distancia de "+getDistancia()+" anos luz e custo de "+calculaCusto()+" C$\n"+
                 "Estado: "+getEstado()+"\n";
