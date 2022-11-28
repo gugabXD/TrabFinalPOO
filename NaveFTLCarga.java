@@ -8,4 +8,9 @@ public class NaveFTLCarga extends Espaconave{
         this.vmaxWarp = vmaxWarp;
         this.maxCarga = maxCarga;
     }
+    public boolean setTransporte(Transporte t){
+        if(t instanceof TransportePessoas || getTransporte()!=null) return false;
+        setTransporteAtual(t);
+        return true;
+    }
 }

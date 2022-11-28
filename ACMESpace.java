@@ -40,7 +40,7 @@ public class ACMESpace {
         switch(opcao){
             case 0-> System.exit(0);
             case 1-> cadastraEspaçoPorto();
-            case 2-> cadastraEspacoNave();
+            //case 2-> cadastraEspacoNave();
             case 3-> cadastraTransp();
             case 4-> consultaTransp();
             case 5-> alteraEstado();
@@ -66,7 +66,7 @@ public class ACMESpace {
         System.out.println("Não foi possível criar o arquivo.");
     }
 
-    public void cadastraEspacoNave(){
+   /* public void cadastraEspacoNave(){
         System.out.println("Por favor insira o nome da espaçonave:");
         String nome = in.nextLine();
         System.out.println("Por favor insira o número identificador do espaço-porto da nave");
@@ -98,7 +98,7 @@ public class ACMESpace {
             return;
         }
         System.out.println("Espaço-porto cadastrado com sucesso");
-    }
+    }*/
 
     public void cadastraEspaçoPorto(){
         System.out.println("Por favor, insira o número do Espaço-Porto:");
@@ -219,8 +219,16 @@ public class ACMESpace {
             System.out.println("===============");
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
-                case 1-> c.associar(t);
-                case 2-> t.setEstado(2);
+                case 1-> {
+                    if(c.associar(t)){
+                        System.out.print("Transporte iniciado com sucesso");
+                    }
+                    else System.out.println("Erro. Não há naves disponíveis no momento");
+                }
+                case 2-> {
+                    t.setEstado(2);
+                    System.out.println("Transporte cancelado.");
+                }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");;
                 }
@@ -235,8 +243,14 @@ public class ACMESpace {
             System.out.println("===============");
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
-                case 1-> t.setEstado(4);
-                case 2-> t.setEstado(2);
+                case 1-> {
+                    t.setEstado(4);
+                    System.out.println("Transporte finalizado com sucesso.");
+                }
+                case 2-> {
+                    t.setEstado(2);
+                    System.out.println("Transporte cancelado.");
+                }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");
                 }

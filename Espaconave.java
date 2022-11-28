@@ -3,7 +3,7 @@ package TrabFinalPOO;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Espaconave{
+public abstract class Espaconave{
 
     private String nome;
 
@@ -26,4 +26,12 @@ public class Espaconave{
     public String getNome(){
         return nome;
     }
+    public void setTransporteAtual(Transporte t){
+        transporteAtual = t;
+    }
+    public Transporte getTransporte(){
+        return transporteAtual;
+    }
+
+    public abstract boolean setTransporte(Transporte t);
 }
