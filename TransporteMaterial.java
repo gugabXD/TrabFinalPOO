@@ -28,4 +28,13 @@ public class TransporteMaterial extends Transporte{
         custoTransp = carga * 500;
         return custoDist * custoTransp;
     }
+
+    @Override
+    public String toString() {
+        String s = "Transporte de material: "+descricao+ "com carga de "+carga+"toneladas\n"+
+                "De origem em: "+getOrigem().toString()+"E destino em: "+getDestino().toString()+
+                
+
+        return null;
+    }
 }

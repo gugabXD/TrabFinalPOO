@@ -1,18 +1,19 @@
 package TrabFinalPOO;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class ACMESpace {
     private Scanner in;
-
-    Cadastros cadastros = new Cadastros();
+    private Cadastros c;
     public ACMESpace(){
-
         in = new Scanner(System.in);
     }
+    public void executa(){
+        c = new Cadastros();
+        menu();
+    }
     public void menu(){
-        while(true) {
+        try{ while(true) {
             System.out.println("============================================================");
             System.out.println("Bem vindo ao menu ACMESpace, escolha uma das opções:");
             System.out.println("1 - Cadastrar novo espaço-porto");
@@ -28,15 +29,17 @@ public class ACMESpace {
             System.out.println("============================================================");
             int opcao = Integer.parseInt(in.nextLine());
             trataComando(opcao);
+         }} catch(Exception e){
+            System.err.print(e);
         }
     }
     public void trataComando(int opcao){
         switch(opcao){
             case 0-> System.exit(0);
-            case 1-> cadastraEspaçoPort();
-            case 2-> cadastraesp();
+            case 1-> cadastraEspaçoPorto();
+            case 2-> cadastraEspacoNave();
             //case 3-> cadasdtraTransp();
-            case 4-> fazer();
+            case 4-> consultaTransp();
             case 5-> fazer();
             case 6-> fazer();
             case 7-> fazer();
@@ -48,13 +51,13 @@ public class ACMESpace {
         //só pros case nao encher o saco com erro xD xD
     }
 
-    public void cadastraesp(){
+    public void cadastraEspacoNave(){
         System.out.println("Por favor insira o nome da espaçonave:");
         String nome = in.nextLine();
-        System.out.println("Por favor insira em qual espaço-porto a nave está:");
-        String local = in.nextLine();
+        System.out.println("Por favor insira o número identificador do espaço-porto da nave");
+        int espPorto = Integer.parseInt(in.nextLine());
 
-        if(cadastros.porcuraespaçoporto(local)==null){
+        if(c.procuraEspacoPorto(espPorto)==null){
             System.out.println("=============================================================================");
             System.out.println("Nenhum Espaço-porto encontrado com esse nome, deseja cadastrar como Terra?");
             System.out.println("[1] - Sim.");
@@ -63,8 +66,8 @@ public class ACMESpace {
             int opção = in.nextInt();
 
             if(opção==1){
-                Espaconave e = new Espaconave(nome , cadastros.porcuraespaçoporto("Terra"));
-                if(!cadastros.cadastraesp(e)){
+                Espaconave e = new Espaconave(nome , c.procuraEspacoPorto(0));
+                if(!c.cadastraesp(e)){
                     System.out.println("Espaçonave já existente.");
                     return;
                 }
@@ -74,30 +77,29 @@ public class ACMESpace {
             System.out.println("Voltando para o menu...");
             return;
         }
-        Espaconave e = new Espaconave(nome, cadastros.porcuraespaçoporto(local));
-        if(!cadastros.cadastraesp(e)){
+        Espaconave e = new Espaconave(nome, c.procuraEspacoPorto(espPorto));
+        if(!c.cadastraesp(e)){
             System.out.println("Espaçonave já existente.");
             return;
         }
         System.out.println("Espaço porto cadastrado com sucesso");
     }
 
-    public void cadastraEspaçoPort(){
+    public void cadastraEspaçoPorto(){
         System.out.println("Por favor, insira o número:");
-        int numero = in.nextInt();
+        int numero = Integer.parseInt(in.nextLine());
         System.out.println("Por favor, insira o nome:");
         String nome = in.nextLine();
         System.out.println("Por favor, insira o cordenada X:");
-        double x = in.nextDouble();
+        double x = Double.parseDouble(in.nextLine());
         System.out.println("Por favor, insira o cordenada Y:");
-        double y = in.nextDouble();
+        double y = Double.parseDouble(in.nextLine());
         System.out.println("Por favor, insira o cordenada Z:");
-        double z = in.nextDouble();
-
+        double z = Double.parseDouble(in.nextLine());
 
         EspacoPorto e = new EspacoPorto(numero, nome, x , y , z );
 
-        if(!cadastros.cadastraEspaçoPort(e)){
+        if(!c.cadastraEspaçoPort(e)){
             System.out.println("Espaçonave já existente.");
             return;
         }
@@ -123,6 +125,9 @@ public class ACMESpace {
         }
 
     }
-
      */
+
+    public void consultaTransp(){
+        c.consultaTransp();
+    }
 }
