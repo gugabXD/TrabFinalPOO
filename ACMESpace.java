@@ -1,6 +1,5 @@
 package TrabFinalPOO;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -39,7 +38,7 @@ public class ACMESpace {
     public void trataComando(int opcao){
         switch(opcao){
             case 0-> System.exit(0);
-            case 1-> cadastraEspaçoPorto();
+            case 1-> cadastraEspacoPorto();
             case 2-> cadastraEspacoNave();
             case 3-> cadastraTransp();
             case 4-> consultaTransp();
@@ -98,9 +97,11 @@ public class ACMESpace {
     public void cadastraEspacoNave(){
         System.out.println("Por favor insira o nome da espaçonave:");
         String nome = in.nextLine();
-        System.out.println("Por favor insira o número identificador do espaço-porto da nave");
+        System.out.println("Por favor insira o número identificador do espaço-porto em que a nave está");
         int espPorto = Integer.parseInt(in.nextLine());
 
+        System.out.println("Por favor insira o tipo da espaçonave:");
+        System.out.println("[1] - Nave FTL Carga");
         if(c.procuraEspacoPorto(espPorto)==null){
             System.out.println("=============================================================================");
             System.out.println("Nenhum Espaço-porto encontrado com esse nome, deseja cadastrar como Terra?");
@@ -111,7 +112,7 @@ public class ACMESpace {
 
             if(opção==1){
                 Espaconave e = new Espaconave(nome , c.procuraEspacoPorto(0));
-                if(!c.cadastraesp(e)){
+                if(!c.cadastraEspNav(e)){
                     System.out.println("Espaçonave já existente.");
                     return;
                 }
@@ -122,14 +123,14 @@ public class ACMESpace {
             return;
         }
         Espaconave e = new Espaconave(nome, c.procuraEspacoPorto(espPorto));
-        if(!c.cadastraesp(e)){
+        if(!c.cadastraEspNav(e)){
             System.out.println("Erro. Espaçonave já existente.");
             return;
         }
         System.out.println("Espaço-porto cadastrado com sucesso");
     }
 
-    public void cadastraEspaçoPorto(){
+    public void cadastraEspacoPorto(){
         System.out.println("Por favor, insira o número do Espaço-Porto:");
         int numero = Integer.parseInt(in.nextLine());
         System.out.println("Por favor, insira o nome:");

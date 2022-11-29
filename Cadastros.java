@@ -22,11 +22,11 @@ public class Cadastros {
     }
 
     public void precadastraTerra(){
-        EspacoPorto Terra = new EspacoPorto(0000, "Terra", 0000, 0000, 0000 );
+        EspacoPorto Terra = new EspacoPorto(0, "Terra", 0, 0, 0 );
         cadEspPort.add (Terra);
     }
 
-    public boolean cadastraesp(Espaconave e){
+    public boolean cadastraEspNav(Espaconave e){
         for(Espaconave p : cadEspNave){
             if(p.getNome().equalsIgnoreCase(e.getNome())){
                 return false;
