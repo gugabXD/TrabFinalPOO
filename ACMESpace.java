@@ -93,40 +93,83 @@ public class ACMESpace {
 
     }
 
-    public void cadastraEspacoNave(){
+    public void cadastraEspacoNave() {
         System.out.println("Por favor insira o nome da espaçonave:");
         String nome = in.nextLine();
         System.out.println("Por favor insira o número identificador do espaço-porto em que a nave está");
         int espPorto = Integer.parseInt(in.nextLine());
 
-        System.out.println("Por favor insira o tipo da espaçonave:");
-        System.out.println("[1] - Nave FTL Carga");
-        if(c.procuraEspacoPorto(espPorto)==null){
+        if (c.procuraEspacoPorto(espPorto) == null) {
             System.out.println("=============================================================================");
-            System.out.println("Nenhum Espaço-porto encontrado com esse nome, deseja cadastrar como Terra?");
+            System.out.println("Nenhum Espaço-porto encontrado com esse numero, deseja cadastrar como Terra?");
             System.out.println("[1] - Sim.");
             System.out.println("[2] - Não.");
             System.out.println("=============================================================================");
             int opção = Integer.parseInt(in.nextLine());
 
-            if(opção==1){
-                Espaconave e = new Espaconave(nome , c.procuraEspacoPorto(0));
-                if(!c.cadastraEspNav(e)){
-                    System.out.println("Espaçonave já existente.");
+
+            switch (opção) {
+                case 1 -> trataEspaconave(nome, 0);
+                default -> {
+                    System.out.println("Voltando para o menu...");
+                    menu();
+                }
+            }
+            return;
+        }
+        trataEspaconave(nome, espPorto);
+    }
+
+
+
+    public void trataEspaconave(String nome, int numeroesp) {
+        System.out.println("=============================================");
+        System.out.println("Por favor insira o tipo da espaçonave:");
+        System.out.println("[1] - Nave FTL");
+        System.out.println("[2] - Nave Subluz");
+        System.out.println("==============================================");
+
+        int a = Integer.parseInt(in.nextLine());
+
+        switch (a) {
+            case 1 -> {
+
+                System.out.println("Por favor insira a velocidade máxima Warp.");
+                double velocidade = Double.parseDouble(in.nextLine());
+
+                System.out.println("Por favor insira a quantidade máxima de pessoas ou de carga. ");
+                double quantidade = Double.parseDouble(in.nextLine());
+
+                NaveFTL n = new NaveFTL(nome, c.procuraEspacoPorto(numeroesp), velocidade, quantidade);
+
+                if(!c.cadastraEspNav(n)){
+                    System.out.println("Espaçonave já existe.");
                     return;
                 }
-                System.out.println("Espaço-porto cadastrado como Terra.");
-                return;
+                System.out.println("Espaçonave criada com sucesso.");
+
             }
-            System.out.println("Voltando para o menu...");
-            return;
+            case 2 -> {
+                System.out.println("Por favor insira a velocidade máxima de impulso (limite 0.3 Warp)");
+                double velocidadeimp = Double.parseDouble(in.nextLine());
+
+                System.out.println("Por favor insira o tipo de combustível.");
+                String combustivel = in.nextLine();
+
+                NaveSubluz s = new NaveSubluz(nome, c.procuraEspacoPorto(numeroesp), velocidadeimp, combustivel);
+
+                if(!c.cadastraEspNav(s)){
+                    System.out.println("Espaçonave já existe.");
+                    return;
+                }
+                System.out.println("Espaçonave criada com sucesso.");
+            }
+            default -> {
+                System.out.println("Voltando para o menu...");
+                menu();
+            }
+
         }
-        Espaconave e = new Espaconave(nome, c.procuraEspacoPorto(espPorto));
-        if(!c.cadastraEspNav(e)){
-            System.out.println("Erro. Espaçonave já existente.");
-            return;
-        }
-        System.out.println("Espaço-porto cadastrado com sucesso");
     }
 
     public void cadastraEspacoPorto(){
