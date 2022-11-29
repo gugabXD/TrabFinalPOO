@@ -153,6 +153,11 @@ public class ACMESpace {
                 System.out.println("Por favor insira a velocidade máxima de impulso (limite 0.3 Warp)");
                 double velocidadeimp = Double.parseDouble(in.nextLine());
 
+                if(velocidadeimp > 0.3){
+                    velocidadeimp = 0.3;
+                    System.out.println("Velocidade máxima inserida é maior que o limite, portanto foi definida como 0.3 Warp");
+                }
+
                 System.out.println("Por favor insira o tipo de combustível.");
                 String combustivel = in.nextLine();
 
