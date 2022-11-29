@@ -11,7 +11,7 @@ public class NaveFTL extends Espaconave{
 
     @Override
     public boolean setTransporte(Transporte t){
-        if(t instanceof TransportePessoas || getTransporte()!=null) return false;
+        if(getTransporte()!=null) return false;
         setTransporteAtual(t);
         return true;
     }

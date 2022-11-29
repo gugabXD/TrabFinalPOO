@@ -36,9 +36,13 @@ public class Cadastros {
         return true;
     }
 
-   public void cadastraTransp(Transporte t){
+   public boolean cadastraTransp(Transporte t){
+        for(Transporte transp: cadTransp){
+            if(t.getIdentificador()==transp.getIdentificador()) return false;
+        }
         cadTransp.add(t);
         filaPendente.add(t);
+        return true;
     }
 
     public boolean cadastraEspaçoPort(EspacoPorto e){
@@ -133,6 +137,17 @@ public class Cadastros {
     public boolean associar(Transporte t){
         for(Espaconave e: cadEspNave){
             if(e.setTransporte(t)) return true;
+        }
+        return false;
+        //Falta remover o transporte da fila de pendentes.
+    }
+
+    public boolean finalizaTransporte(Transporte t){
+        for(Espaconave e: cadEspNave){
+            if(e.getTransporte()==t){
+                e.removeTransporte();
+                return true;
+            }
         }
         return false;
     }

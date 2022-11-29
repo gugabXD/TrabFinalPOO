@@ -32,6 +32,7 @@ public class Espaconave{
     }
     public void setTransporteAtual(Transporte t){
         transporteAtual = t;
+        historico.add(t);
     }
     public Transporte getTransporte(){
         return transporteAtual;
@@ -39,5 +40,8 @@ public class Espaconave{
 
     public boolean setTransporte(Transporte t){
         return false;
+    }
+    public void removeTransporte(){
+        transporteAtual = null;
     }
 }
