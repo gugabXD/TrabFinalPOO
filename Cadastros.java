@@ -20,7 +20,6 @@ public class Cadastros {
         filaPendente = new LinkedList<>();
         precadastraTerra();
     }
-
     public void precadastraTerra(){
         EspacoPorto Terra = new EspacoPorto(0, "Terra", 0, 0, 0 );
         cadEspPort.add (Terra);

@@ -11,6 +11,7 @@ public class ACMESpace {
     private Cadastros c;
     public ACMESpace(){
         in = new Scanner(System.in);
+        c = new Cadastros();
     }
     public void executa(){
         c = new Cadastros();
@@ -58,7 +59,7 @@ public class ACMESpace {
 
     public void salvaDados(){
         System.out.println("==================================================================");
-        System.out.println("Por favor, selecione qual formato gostaria de salvar o aqruivo.");
+        System.out.println("Por favor, selecione qual formato gostaria de salvar o arquivo.");
         System.out.println("[1] - CSV");
         System.out.println("[2] - XML ");
         System.out.println("==================================================================");
