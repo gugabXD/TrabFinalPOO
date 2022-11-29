@@ -8,4 +8,10 @@ public class NaveFTLPessoa extends Espaconave{
         this.vmaxWarp = vmaxWarp;
         this.maxPessoas = maxPessoas;
     }
+    @Override
+    public boolean setTransporte(Transporte t){
+        if(t instanceof TransporteMaterial || getTransporte()!=null) return false;
+        setTransporteAtual(t);
+        return true;
+    }
 }

@@ -39,8 +39,8 @@ public class ACMESpace {
     public void trataComando(int opcao){
         switch(opcao){
             case 0-> System.exit(0);
-            case 1-> cadastraEspaçoPorto();
-            case 2-> cadastraEspacoNave();
+            case 1-> cadastraEspacoPorto();
+            //case 2-> cadastraEspacoNave();
             case 3-> cadastraTransp();
             case 4-> consultaTransp();
             case 5-> alteraEstado();
@@ -81,7 +81,6 @@ public class ACMESpace {
         }
         System.out.println("Não foi possível criar o arquivo.");
     }
-
     public void salvaDadosXML(){
         System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
         String nome;
@@ -94,42 +93,8 @@ public class ACMESpace {
         System.out.println("Não foi possível criar o arquivo.");
 
     }
-
-    public void cadastraEspacoNave(){
-        System.out.println("Por favor insira o nome da espaçonave:");
-        String nome = in.nextLine();
-        System.out.println("Por favor insira o número identificador do espaço-porto da nave");
-        int espPorto = Integer.parseInt(in.nextLine());
-
-        if(c.procuraEspacoPorto(espPorto)==null){
-            System.out.println("=============================================================================");
-            System.out.println("Nenhum Espaço-porto encontrado com esse nome, deseja cadastrar como Terra?");
-            System.out.println("[1] - Sim.");
-            System.out.println("[2] - Não.");
-            System.out.println("=============================================================================");
-            int opção = Integer.parseInt(in.nextLine());
-
-            if(opção==1){
-                Espaconave e = new Espaconave(nome , c.procuraEspacoPorto(0));
-                if(!c.cadastraesp(e)){
-                    System.out.println("Espaçonave já existente.");
-                    return;
-                }
-                System.out.println("Espaço-porto cadastrado como Terra.");
-                return;
-            }
-            System.out.println("Voltando para o menu...");
-            return;
-        }
-        Espaconave e = new Espaconave(nome, c.procuraEspacoPorto(espPorto));
-        if(!c.cadastraesp(e)){
-            System.out.println("Erro. Espaçonave já existente.");
-            return;
-        }
-        System.out.println("Espaço-porto cadastrado com sucesso");
-    }
-
-    public void cadastraEspaçoPorto(){
+    
+    public void cadastraEspacoPorto(){
         System.out.println("Por favor, insira o número do Espaço-Porto:");
         int numero = Integer.parseInt(in.nextLine());
         System.out.println("Por favor, insira o nome:");
@@ -248,8 +213,16 @@ public class ACMESpace {
             System.out.println("===============");
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
-                case 1-> c.associar(t);
-                case 2-> t.setEstado(2);
+                case 1-> {
+                    if(c.associar(t)){
+                        System.out.print("Transporte iniciado com sucesso");
+                    }
+                    else System.out.println("Erro. Não há naves disponíveis no momento");
+                }
+                case 2-> {
+                    t.setEstado(2);
+                    System.out.println("Transporte cancelado.");
+                }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");;
                 }
@@ -264,8 +237,14 @@ public class ACMESpace {
             System.out.println("===============");
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
-                case 1-> t.setEstado(4);
-                case 2-> t.setEstado(2);
+                case 1-> {
+                    t.setEstado(4);
+                    System.out.println("Transporte finalizado com sucesso.");
+                }
+                case 2-> {
+                    t.setEstado(2);
+                    System.out.println("Transporte cancelado.");
+                }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");
                 }
