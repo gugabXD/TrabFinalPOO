@@ -1,6 +1,7 @@
 package TrabFinalPOO;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Espaconave{
 
@@ -8,11 +9,14 @@ public class Espaconave{
 
     private EspacoPorto localAtual;
 
-    private ArrayList<Transporte> historico;
+    private Queue<Transporte> historico;
+
+    private Transporte transporteAtual;
 
     public Espaconave(String nome, EspacoPorto localAtual) {
         this.nome = nome;
         this.localAtual = localAtual;
+        historico = new LinkedList<>();
     }
 
     public String geraResumo(){
@@ -25,5 +29,15 @@ public class Espaconave{
 
     public String getNome(){
         return nome;
+    }
+    public void setTransporteAtual(Transporte t){
+        transporteAtual = t;
+    }
+    public Transporte getTransporte(){
+        return transporteAtual;
+    }
+
+    public boolean setTransporte(Transporte t){
+        return false;
     }
 }

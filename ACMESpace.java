@@ -80,7 +80,6 @@ public class ACMESpace {
         }
         System.out.println("Não foi possível criar o arquivo.");
     }
-
     public void salvaDadosXML(){
         System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
         String nome;
@@ -249,8 +248,16 @@ public class ACMESpace {
             System.out.println("===============");
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
-                case 1-> c.associar(t);
-                case 2-> t.setEstado(2);
+                case 1-> {
+                    if(c.associar(t)){
+                        System.out.print("Transporte iniciado com sucesso");
+                    }
+                    else System.out.println("Erro. Não há naves disponíveis no momento");
+                }
+                case 2-> {
+                    t.setEstado(2);
+                    System.out.println("Transporte cancelado.");
+                }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");;
                 }
@@ -265,8 +272,14 @@ public class ACMESpace {
             System.out.println("===============");
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
-                case 1-> t.setEstado(4);
-                case 2-> t.setEstado(2);
+                case 1-> {
+                    t.setEstado(4);
+                    System.out.println("Transporte finalizado com sucesso.");
+                }
+                case 2-> {
+                    t.setEstado(2);
+                    System.out.println("Transporte cancelado.");
+                }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");
                 }

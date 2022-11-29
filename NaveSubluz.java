@@ -9,4 +9,10 @@ public class NaveSubluz extends Espaconave{
         this.vmaxImpulso = vmaxImpulso;
         this.combustivel = combustivel;
     }
+    @Override
+    public boolean setTransporte(Transporte t){
+        if(getTransporte()!=null) return false;
+        setTransporteAtual(t);
+        return true;
+    }
 }

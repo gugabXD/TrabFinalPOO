@@ -131,8 +131,10 @@ public class Cadastros {
     }
 
     public boolean associar(Transporte t){
-        
-        return true;
+        for(Espaconave e: cadEspNave){
+            if(e.setTransporte(t)) return true;
+        }
+        return false;
     }
 
 }
