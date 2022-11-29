@@ -1,5 +1,8 @@
 package TrabFinalPOO;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -43,7 +46,7 @@ public class ACMESpace {
             case 3-> cadastraTransp();
             case 4-> consultaTransp();
             case 5-> alteraEstado();
-            case 6-> fazer();
+            case 6-> carregaDados();
             case 7-> fazer();
             case 8-> salvaDados();
             case 9-> fazer();
@@ -323,10 +326,12 @@ public class ACMESpace {
                 case 1-> {
                     t.setEstado(4);
                     System.out.println("Transporte finalizado com sucesso.");
+                    c.finalizaTransporte(t);
                 }
                 case 2-> {
                     t.setEstado(2);
                     System.out.println("Transporte cancelado.");
+                    c.finalizaTransporte(t);
                 }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");
@@ -342,5 +347,77 @@ public class ACMESpace {
             return;
         }
         lista.stream().forEach(t -> System.out.println(t));
+    }
+
+    public void carregaDados(){
+        System.out.println("===============");
+        System.out.println("Que tipo de Espaço-Objeto deseja inserir?");
+        System.out.println("[1] - Espaço-Porto");
+        System.out.println("[2] - Espaçonave");
+        System.out.println("[3] - Transporte");
+        int opcao = Integer.parseInt(in.nextLine());
+        switch (opcao){
+            case 1-> carregaDados(1);
+            case 2-> carregaDados(2);
+            case 3-> carregaDados(3);
+            default -> System.out.println("Opção inválida. Retornando ao menu.");
+        }
+    }
+    public void carregaDados(int tipo){
+        BufferedReader leitor;
+        try{
+            System.out.println("Insira o local de arquivo");
+            String caminho = in.nextLine();
+            leitor = new BufferedReader(new FileReader(caminho+".dat"));
+            String linha;
+            leitor.readLine();
+            switch(tipo) {
+               case 1-> { while (true) {
+                    linha = leitor.readLine();
+                    if (linha == null) break;
+                    lerESPPORT(linha);
+                 } }
+                case 2-> { while (true) {
+                    linha = leitor.readLine();
+                    if (linha == null) break;
+                    lerESPNAVE(linha);
+                } }
+                case 3-> { while (true) {
+                    linha = leitor.readLine();
+                    if (linha == null) break;
+                    lerTRANSP(linha);
+                } }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        catch(Exception e){
+            System.err.print(e);
+        }
+    }
+    public void lerESPPORT(String linha){
+        String[] res = linha.split(";", 0);
+        EspacoPorto esp = new EspacoPorto(Integer.parseInt(res[0]), res[1], Double.parseDouble(res[2]), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
+        boolean resultado = c.cadastraEspaçoPort(esp);
+        if(!resultado) System.out.println("Erro. Identificador repetido");
+    }
+    public void lerESPNAVE (String linha){
+        String[] res = linha.split(";", 0);
+        int tipo = Integer.parseInt(res[0]);
+        Espaconave nave;
+        if(tipo==1) nave = new NaveSubluz(res[1],c.procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), res[4]);
+        else nave = new NaveFTL(res[1], c.procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
+        boolean resultado = c.cadastraEspNav(nave);
+        if(!resultado) System.out.println("Erro. Essa nave já existe.");
+    }
+
+    public void lerTRANSP (String linha){
+        String[] res = linha.split(";", 0);
+        int tipo = Integer.parseInt(res[0]);
+        Transporte transporte;
+        if(tipo==1) transporte = new TransportePessoas(Integer.parseInt(res[1]),c.procuraEspacoPorto(Integer.parseInt(res[2])),c.procuraEspacoPorto(Integer.parseInt(res[3])), Integer.parseInt(res[4]) );
+        else transporte = new TransporteMaterial(Integer.parseInt(res[1]),c.procuraEspacoPorto(Integer.parseInt(res[2])),c.procuraEspacoPorto(Integer.parseInt(res[3])), res[5], Double.parseDouble(res[4]));
+        boolean resultado = c.cadastraTransp(transporte);
+        if(!resultado) System.out.println("Erro. Essa nave já existe.");
     }
 }
