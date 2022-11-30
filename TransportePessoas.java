@@ -7,6 +7,11 @@ public class TransportePessoas extends Transporte{
         super(identificador, origem, destino);
         this.quantPessoas = Math.abs(quantPessoas);
     }
+
+    public int getQuantPessoas() {
+        return quantPessoas;
+    }
+
     @Override
     public double calculaDistancia() {
         EspacoPorto origem = getOrigem();
@@ -22,7 +27,7 @@ public class TransportePessoas extends Transporte{
 
     @Override
     public String geraResumoXML(){
-        return "<identificador>" + getIdentificador() + "</identificador>" + "\n" + "<origem>" + getOrigem().getNome() + "</origem>" + "\n" + "<destino>" + getDestino().getNome() + "</destino>"+ "\n" + "<quantpessoas>" + quantPessoas + "</quantpessoas>";
+        return "<identificador>" + getIdentificador() + "</identificador>" + "\n" + "<origem>" + getOrigem().getNumero() + "</origem>" + "\n" + "<destino>" + getDestino().getNumero() + "</destino>"+ "\n" + "<quantpessoas>" + quantPessoas + "</quantpessoas>";
     }
 
     @Override

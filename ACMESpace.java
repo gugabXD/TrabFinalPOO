@@ -69,15 +69,34 @@ public class ACMESpace {
         System.out.println("======================================================");
         System.out.println("Por favor, insira o tipo de arquivo que irá ser lido");
         System.out.println("[1] - CSV ");
-        System.out.println("[2] - XML ");
+        System.out.println("[2] - JSON ");
         System.out.println("======================================================");
         int opcao = Integer.parseInt(in.nextLine());
 
         switch(opcao){
 
             case 1 -> leArquivoCSV(local);
+            case 2 -> leArquivoJSON(local);
             default -> carregarDados();
         }
+    }
+
+    public void leArquivoJSON(String local){
+        System.out.println("====================================");
+        System.out.println("Por favor insira o que deseja inserir:");
+        System.out.println("[1] - Espaçonaves");
+        System.out.println("[2] - Espaço-portos");
+        System.out.println("[3] - Transportes");
+        System.out.println("====================================");
+        int opcao = Integer.parseInt(in.nextLine());
+
+        switch(opcao){
+            case 1 -> c.leituraNavesJSON(local);
+            case 2 -> c.leituraEspacoPorto(local);
+            case 3 -> c.leituraTransporte(local);
+            default -> leArquivoCSV(local);
+        }
+
 
     }
 
@@ -107,8 +126,8 @@ public class ACMESpace {
         System.out.println("==================================================================");
         System.out.println("Por favor, selecione qual formato gostaria de salvar o arquivo.");
         System.out.println("[1] - CSV");
-        System.out.println("[2] - XML");
-        System.out.println("[3] - CSV e XMl");
+        System.out.println("[2] - JSON");
+        System.out.println("[3] - CSV e JSON");
         System.out.println("==================================================================");
         int opcao = Integer.parseInt(in.nextLine());
 
@@ -169,12 +188,47 @@ public class ACMESpace {
     }
 
     public void salvaDadosXML(String nome){
-        if(c.salvaDadosArquivoXML(nome)) {
-            System.out.println("Arquivo criado com sucesso.");
-            return;
+        System.out.println("==================================================================");
+        System.out.println("Selecione o que deseja salvar: ");
+        System.out.println("[1] - Espaçonaves");
+        System.out.println("[2] - Espaço-portos");
+        System.out.println("[3] - Transportes");
+        System.out.println("[4] - Salva todos os dados.");
+        System.out.println("==================================================================");
+        int opcao = Integer.parseInt(in.nextLine());
 
+        switch (opcao) {
+            case 1 -> {
+                if (c.salvaNavesJson(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
+            case 2 -> {
+                if (c.salvaEspPortJson(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
+            case 3 -> {
+                if (c.salvaTranspJson(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
+            case 4 -> {
+                if (c.salvaTranspJson(nome) && c.salvaNavesJson(nome + "(1)") && c.salvaEspPortJson(nome + "(2)")) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+
+            }
+            default -> menu();
         }
-        System.out.println("Não foi possível criar o arquivo.");
     }
 
     public void cadastraEspacoNave() {

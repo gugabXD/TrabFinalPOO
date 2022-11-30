@@ -1,9 +1,6 @@
 package TrabFinalPOO;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,11 +9,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 public class Cadastros {
     private ArrayList<Espaconave> cadEspNave;
     private ArrayList<Transporte> cadTransp;
     private ArrayList<EspacoPorto> cadEspPort;
+
+    private ArrayList<JSONObject> json;
     Scanner in = new Scanner(System.in);
 
     private Queue<Transporte> filaPendente;
@@ -60,13 +63,13 @@ public class Cadastros {
 
                 if(tipo.equalsIgnoreCase("1")) {
                     NaveSubluz n = new NaveSubluz(nome, procuraEspacoPorto(numero), vel ,combustivel_limite );
-                    cadEspNave.add(n);
+                    cadastraEspNav(n);
                 }
 
                 if(tipo.equalsIgnoreCase("2")) {
                     double limite = Double.parseDouble(combustivel_limite);
                     NaveFTL n = new NaveFTL(nome, procuraEspacoPorto(numero), vel, limite);
-                    cadEspNave.add(n);
+                   cadastraEspNav(n);
                 }
 
             }
@@ -85,6 +88,61 @@ public class Cadastros {
             in.nextLine();
         }
         System.out.println("Pronto!");
+    }
+
+    public void leituraNavesJSON(String local){
+        JSONObject jsonObject;
+        JSONParser parser = new JSONParser();
+
+        String tipo;
+        String nome;
+        String espacoporto;
+        String velocidade;
+        String combustivel_limite;
+
+
+        try {
+
+            jsonObject = (JSONObject) parser.parse(new FileReader(local));
+
+
+            nome = (String) jsonObject.get("Nome");
+            tipo = (String) jsonObject.get("Tipo");
+            espacoporto = (String) jsonObject.get("Espaço Porto");
+
+            int numero = Integer.parseInt(espacoporto);
+
+            if(tipo.equalsIgnoreCase("1")){
+                velocidade = (String) jsonObject.get("VMax Impulso");
+                combustivel_limite = (String) jsonObject.get("Combustivel");
+
+                double vel = Double.parseDouble(velocidade);
+
+                NaveSubluz n = new NaveSubluz(nome, procuraEspacoPorto(numero), vel, combustivel_limite );
+                cadastraEspNav(n);
+
+            }
+            else{
+                velocidade = (String) jsonObject.get("VMax Warp");
+                combustivel_limite = (String) jsonObject.get("MaxCarga");
+
+                double vel = Double.parseDouble(velocidade);
+                double carga = Double.parseDouble((combustivel_limite));
+
+                NaveFTL n = new NaveFTL(nome, procuraEspacoPorto(numero), vel, carga );
+                cadastraEspNav(n);
+
+            }
+        }
+
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public void leituraEspacoPorto(String local){
@@ -116,7 +174,7 @@ public class Cadastros {
 
 
                 EspacoPorto esp = new EspacoPorto(num, nome, cx, cy,cz);
-                cadEspPort.add(esp);
+                cadastraEspaçoPort(esp);
 
             }
             reader.close();
@@ -287,6 +345,42 @@ public class Cadastros {
         }
     }
 
+    public boolean salvaNavesJson(String nomeArquivo) {
+        json = new ArrayList<>();
+        for (Espaconave e : cadEspNave) {
+            JSONObject jsonObject = new JSONObject();
+            if (e instanceof NaveSubluz) {
+                jsonObject.put("Tipo", "1");
+                jsonObject.put("Nome", e.getNome());
+                jsonObject.put("Espaço Porto", e.getLocalAtual().getNumero());
+                jsonObject.put("VMax Impulso", ((NaveSubluz) e).getVmaxImpulso());
+                jsonObject.put("Combustivel", ((NaveSubluz) e).getCombustivel());
+
+                json.add(jsonObject);
+            }
+            else{
+                jsonObject.put("Tipo", "2");
+                jsonObject.put("Nome", e.getNome());
+                jsonObject.put("Espaço Porto", e.getLocalAtual().getNumero());
+                jsonObject.put("VMax Warp", ((NaveFTL) e).getVmaxWarp());
+                jsonObject.put("MaxCarga", ((NaveFTL) e).getMaxCarga());
+
+                json.add(jsonObject);
+            }
+        }
+        try{
+            FileWriter arq = new FileWriter(nomeArquivo);
+            for(JSONObject j : json){
+                arq.write(j.toJSONString() + "\n");
+            }
+            arq.close();
+            return true;
+        }
+            catch(IOException k){
+            return false;
+        }
+    }
+
     public boolean salvaEspacoPorto(String nomeArquivo){
         String linha = "";
         try {
@@ -301,6 +395,32 @@ public class Cadastros {
             return true;
 
         }  catch (Exception e ){
+            return false;
+        }
+    }
+
+    public boolean salvaEspPortJson(String nomeArquivo) {
+        json = new ArrayList<>();
+        for (EspacoPorto e : cadEspPort) {
+            JSONObject jsonObject = new JSONObject();
+
+                jsonObject.put("Numero", e.getNumero());
+                jsonObject.put("Nome", e.getNome());
+                jsonObject.put("CordX", e.getCoordX());
+                jsonObject.put("CordY", e.getCoordY());
+                jsonObject.put("CordZ", e.getCoordZ());
+
+                json.add(jsonObject);
+        }
+        try{
+            FileWriter arq = new FileWriter(nomeArquivo);
+            for(JSONObject j : json ){
+                arq.write(j.toJSONString() + "\n");
+            }
+            arq.close();
+            return true;
+        }
+        catch(IOException k){
             return false;
         }
     }
@@ -330,31 +450,38 @@ public class Cadastros {
         }
     }
 
-    public boolean salvaDadosArquivoXML(String nomeArquivo) {
-        String linha = "";
+    public boolean salvaTranspJson(String nomeArquivo) {
+        json = new ArrayList<>();
+        for (Transporte e : cadTransp) {
+            JSONObject jsonObject = new JSONObject();
+            if (e instanceof TransportePessoas) {
+                jsonObject.put("Tipo", "1");
+                jsonObject.put("Id", e.getIdentificador());
+                jsonObject.put("Origem", e.getOrigem().getNumero());
+                jsonObject.put("Destino", e.getDestino().getNumero());
+                jsonObject.put("Quantpessoas", ((TransportePessoas) e).getQuantPessoas());
 
-        try {
+                json.add(jsonObject);
+            }
+            else{
+                jsonObject.put("Tipo", "2");
+                jsonObject.put("Id", e.getIdentificador());
+                jsonObject.put("Origem", e.getOrigem().getNumero());
+                jsonObject.put("Destino", e.getDestino().getNumero());
+                jsonObject.put("Carga", e.getCarga());
+
+                json.add(jsonObject);
+            }
+        }
+        try{
             FileWriter arq = new FileWriter(nomeArquivo);
-            BufferedWriter bf = new BufferedWriter(arq);
-            bf.write("-<EspacoPorto>" + "\n");
-            for (EspacoPorto p : cadEspPort) {
-                linha = (p.geraResumoXML() + "\n");
-                bf.write(linha);
+            for(JSONObject j : json){
+                arq.write(j.toJSONString() + "\n");
             }
-            bf.write("-<Espaconave>" + "\n");
-            for (Espaconave e : cadEspNave) {
-                linha = (e.geraResumoXML() + "\n");
-                bf.write(linha);
-            }
-            bf.write("-<Transporte>" + "\n");
-            for (Transporte t : cadTransp) {
-                linha = (t.geraResumoXML() + "\n");
-                bf.write(linha);
-            }
-            bf.close();
+            arq.close();
             return true;
-        } catch (Exception e) {
-            System.out.println("Não foi possível criar o arquivo.");
+        }
+        catch(IOException k){
             return false;
         }
     }
