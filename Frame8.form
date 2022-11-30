@@ -26,7 +26,7 @@
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="CSV"/>
+          <text value="DAT"/>
         </properties>
       </component>
       <component id="fb8ce" class="javax.swing.JButton" binding="XMLButton" default-binding="true">
@@ -47,7 +47,7 @@
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="CSV e JSON"/>
+          <text value="DAT e JSON"/>
         </properties>
       </component>
       <component id="a50e2" class="javax.swing.JLabel" binding="resp">
