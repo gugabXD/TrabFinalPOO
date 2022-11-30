@@ -25,11 +25,11 @@ public class NaveSubluz extends Espaconave{
     }
     @Override
     public String toString(){
-        String s = "Espaçonave Subluz de nome "+getNome();
+        String s = "\nEspaçonave Subluz de nome "+getNome();
         Transporte t = getTransporte();
-        if(t!=null) s+= "\n Transportando carga de "+t.getOrigem().getNome()+" a "+t.getDestino().getNome();
-        else s+= "\n Localizado em " +getLocalAtual().getNome();
-        s+="Com velocidade máxima de "+vmaxImpulso+" Warp. Utiliza " +combustivel+" como combustível.";
+        if(t!=null) s+= "\nTransportando carga de "+t.getOrigem().getNome()+" a "+t.getDestino().getNome();
+        else s+= "\nLocalizado em " +getLocalAtual().getNome();
+        s+="\nCom velocidade máxima de "+vmaxImpulso+" Warp. Combustível: "+combustivel;
         Queue<Transporte> historico = getHistorico();
         if(!historico.isEmpty()) {
             s+="\nEssa nave possui em seu histórico os transportes: ";

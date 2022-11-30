@@ -32,7 +32,7 @@ public class Espaconave{
     }
     public void setTransporteAtual(Transporte t){
         transporteAtual = t;
-        historico.add(t);
+        if(!historico.contains(t)) historico.add(t);
     }
     public Transporte getTransporte(){
         return transporteAtual;

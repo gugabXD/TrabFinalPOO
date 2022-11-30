@@ -21,7 +21,7 @@ public class Cadastros {
     }
 
     public void precadastraTerra() {
-        EspacoPorto Terra = new EspacoPorto(0, "Terra", 0, 0, 0);
+        EspacoPorto Terra = new EspacoPorto(11, "Terra", 0, 0, 0);
         cadEspPort.add(Terra);
     }
 
@@ -65,15 +65,19 @@ public class Cadastros {
     public ArrayList<Transporte> consultaTransp() {
         if (cadTransp.isEmpty()) return null;
         ArrayList<Transporte> aux = new ArrayList<>();
-        if (cadTransp.isEmpty()) return null;
         cadTransp.stream().forEach(t -> aux.add(t));
         return aux;
     }
 
+    public ArrayList<Transporte> consultaFilaPendente() {
+        if (filaPendente.isEmpty()) return null;
+        ArrayList<Transporte> aux = new ArrayList<>();
+        filaPendente.stream().forEach(t -> aux.add(t));
+        return aux;
+    }
     public ArrayList<Espaconave> consultaESPNAVE() {
         if (cadEspNave.isEmpty()) return null;
         ArrayList<Espaconave> aux = new ArrayList<>();
-        if (cadEspNave.isEmpty()) return null;
         cadEspNave.stream().forEach(t -> aux.add(t));
         return aux;
     }
@@ -81,7 +85,6 @@ public class Cadastros {
     public ArrayList<EspacoPorto> consultaESPPORTO() {
         if (cadEspPort.isEmpty()) return null;
         ArrayList<EspacoPorto> aux = new ArrayList<>();
-        if (cadEspPort.isEmpty()) return null;
         cadEspPort.stream().forEach(t -> aux.add(t));
         return aux;
     }
@@ -188,7 +191,10 @@ public class Cadastros {
 
     public boolean associar(Transporte t) {
         for (Espaconave e : cadEspNave) {
-            if (e.setTransporte(t)) return true;
+            if (e.setTransporte(t)) {
+                t.setEstado(3);
+                return true;
+            }
         }
         return false;
     }

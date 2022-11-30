@@ -50,6 +50,10 @@ public class ACMESpace {
             case 7-> designaTransp();
             case 8-> salvaDados();
             case 9-> fazer();
+            case 99->consultaESPPORTO();
+            case 100->consultaESPNAVE();
+            case 101-> consultaFilaPendente();
+            default -> System.out.println("Opção inválida.");
         }
     }
     public void fazer(){
@@ -140,7 +144,10 @@ public class ACMESpace {
 
 
             switch (opção) {
-                case 1 -> trataEspaconave(nome, 0);
+                case 1 -> {
+                    if(c.procuraEspacoPorto(11)==null) c.precadastraTerra();
+                    trataEspaconave(nome,     11);
+                }
                 default -> {
                     System.out.println("Voltando para o menu...");
                     menu();
@@ -178,20 +185,31 @@ public class ACMESpace {
                     return;
                 }
                 System.out.println("Espaçonave criada com sucesso.");
-
+                System.out.println(n);
             }
             case 2 -> {
                 System.out.println("Por favor insira a velocidade máxima de impulso (limite 0.3 Warp)");
-                double velocidadeimp = Double.parseDouble(in.nextLine());
-
+                double velocidadeimp = Math.abs(Double.parseDouble(in.nextLine()));
                 if(velocidadeimp > 0.3){
                     velocidadeimp = 0.3;
                     System.out.println("Velocidade máxima inserida é maior que o limite, portanto foi definida como 0.3 Warp");
                 }
 
-                System.out.println("Por favor insira o tipo de combustível.");
-                String combustivel = in.nextLine();
-
+                System.out.printf("=======================================");
+                System.out.println("Por favor, escolha o tipo de combustível");
+                System.out.println("[1] - Íon");
+                System.out.println("[2] - Nuclear");
+                System.out.printf("=======================================");
+                int opcao = Integer.parseInt(in.nextLine());
+                String combustivel;
+                switch(opcao){
+                    case 1-> combustivel = "ion";
+                    case 2-> combustivel = "nuclear";
+                    default -> {
+                        System.out.println("Opção inválida. Voltando ao menu");
+                        return;
+                    }
+                }
                 NaveSubluz s = new NaveSubluz(nome, c.procuraEspacoPorto(numeroesp), velocidadeimp, combustivel);
 
                 if(!c.cadastraEspNav(s)){
@@ -199,6 +217,7 @@ public class ACMESpace {
                     return;
                 }
                 System.out.println("Espaçonave criada com sucesso.");
+                System.out.println(s);
             }
             default -> {
                 System.out.println("Voltando para o menu...");
@@ -226,7 +245,7 @@ public class ACMESpace {
             return;
         }
         System.out.println("Espaço-porto cadastrado com sucesso");
-
+        System.out.println(e);
     }
 
     public void cadastraTransp(){
@@ -305,6 +324,7 @@ public class ACMESpace {
     }
 
     public void alteraEstado(){
+        consultaTransp();
         System.out.println("Insira o identificador do transporte");
         int ident = Integer.parseInt(in.nextLine());
         Transporte t = c.procuraTransp(ident);
@@ -330,12 +350,13 @@ public class ACMESpace {
                 case 1-> {
                     if(c.associar(t)){
                         c.removePendente(t);
-                        System.out.print("Transporte iniciado com sucesso");
+                        System.out.println("Transporte iniciado com sucesso");
                     }
                     else System.out.println("Erro. Não há naves disponíveis no momento");
                 }
                 case 2-> {
                     t.setEstado(2);
+                    c.removePendente(t);
                     System.out.println("Transporte cancelado.");
                 }
                 default -> {
@@ -378,6 +399,14 @@ public class ACMESpace {
     }
     public void consultaTransp(){
         ArrayList<Transporte> lista = c.consultaTransp();
+        if(lista==null){
+            System.out.println("Erro. Não há nenhum transporte cadastrado");
+            return;
+        }
+        lista.stream().forEach(t -> System.out.println(t));
+    }
+    public void consultaFilaPendente(){
+        ArrayList<Transporte> lista = c.consultaFilaPendente();
         if(lista==null){
             System.out.println("Erro. Não há nenhum transporte cadastrado");
             return;
@@ -429,20 +458,23 @@ public class ACMESpace {
                     linha = leitor.readLine();
                     if (linha == null) break;
                     lerESPPORT(linha);
-                    consultaESPPORTO();
-                 } }
+                 }
+                   consultaESPPORTO();
+               }
                 case 2-> { while (true) {
                     linha = leitor.readLine();
                     if (linha == null) break;
                     lerESPNAVE(linha);
+                }
                     consultaESPNAVE();
-                } }
+               }
                 case 3-> { while (true) {
                     linha = leitor.readLine();
                     if (linha == null) break;
                     lerTRANSP(linha);
+                }
                     consultaTransp();
-                } }
+               }
             }
             leitor.close();
         } catch (FileNotFoundException e) {
