@@ -70,29 +70,66 @@ public class Cadastros {
         return aux;
     }
 
-    public boolean salvaDadosArquivoCSV(String nomeArquivo) {
+    public boolean salvaNaves(String nomeArquivo){
         String linha = "";
-
-        try{
+        try {
             FileWriter arq = new FileWriter(nomeArquivo);
             BufferedWriter bf = new BufferedWriter(arq);
-            for(EspacoPorto p : cadEspPort){
-                linha = (p.geraResumo() + "\n");
-                bf.write(linha);
-            }
-            for(Espaconave e : cadEspNave){
-                linha = (e.geraResumo() + "\n");
-                bf.write(linha);
-            }
-            for(Transporte t : cadTransp){
-                linha = (t.geraResumo() + "\n");
+            bf.write("tipo;nome;espacoporto;velocidade;combustivel_limite"+ "\n");
+            for (Espaconave p : cadEspNave) {
+                if(p instanceof NaveSubluz){
+                    linha = ("1" + p.geraResumo() + "\n");
+                    bf.write(linha);
+                    break;
+                }
+                linha = ("2" + p.geraResumo() + "\n");
                 bf.write(linha);
             }
             bf.close();
             return true;
+
+        }  catch (Exception e ){
+            return false;
         }
-        catch (Exception e ){
-            System.out.println("Não foi possível criar o arquivo.");
+    }
+
+    public boolean salvaEspacoPorto(String nomeArquivo){
+        String linha = "";
+        try {
+            FileWriter arq = new FileWriter(nomeArquivo);
+            BufferedWriter bf = new BufferedWriter(arq);
+            bf.write("numero;nome;cordx;cordy;cordz"+ "\n");
+            for (EspacoPorto p : cadEspPort) {
+                linha = (p.geraResumo() + "\n");
+                bf.write(linha);
+            }
+            bf.close();
+            return true;
+
+        }  catch (Exception e ){
+            return false;
+        }
+    }
+
+    public boolean salvaTransporte(String nomeArquivo){
+        String linha = "";
+        try {
+            FileWriter arq = new FileWriter(nomeArquivo);
+            BufferedWriter bf = new BufferedWriter(arq);
+            bf.write("tipo;identificador;origem;destino;descricao;pessoas_carga" + "\n");
+            for (Transporte p : cadTransp) {
+                if(p instanceof TransportePessoas){
+                    linha = ("1" + p.geraResumo() + "\n");
+                    bf.write(linha);
+                    break;
+                }
+                linha = ("2" + p.geraResumo() + "\n");
+                bf.write(linha);
+            }
+            bf.close();
+            return true;
+
+        }  catch (Exception e ){
             return false;
         }
     }

@@ -38,10 +38,15 @@ public class Espaconave{
         return transporteAtual;
     }
 
+    public EspacoPorto getLocalAtual(){
+        return localAtual;
+    }
+
     public boolean setTransporte(Transporte t){
         return false;
     }
     public void removeTransporte(){
         transporteAtual = null;
     }
+
 }

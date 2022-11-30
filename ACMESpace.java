@@ -57,43 +57,71 @@ public class ACMESpace {
     }
 
     public void salvaDados(){
+        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
+        String nome;
+        nome = in.nextLine();
+
         System.out.println("==================================================================");
-        System.out.println("Por favor, selecione qual formato gostaria de salvar o aqruivo.");
+        System.out.println("Por favor, selecione qual formato gostaria de salvar o arquivo.");
         System.out.println("[1] - CSV");
-        System.out.println("[2] - XML ");
+        System.out.println("[2] - XML");
+        System.out.println("[3] - CSV e XMl");
         System.out.println("==================================================================");
         int opcao = Integer.parseInt(in.nextLine());
 
-        if(opcao==1){
-            salvaDadosCsv();
-        }
-        if(opcao==2){
-            salvaDadosXML();
+        switch (opcao){
+            case 1 -> salvaDadosCsv(nome);
+            case 2 -> salvaDadosXML(nome);
+            case 3 -> {
+                salvaDadosCsv(nome);
+                salvaDadosXML(nome);
+            }
+            default -> menu();
         }
     }
 
-    public void salvaDadosCsv(){
-        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
-        String nome;
-        nome = in.nextLine();
-        if(c.salvaDadosArquivoCSV(nome)) {
-            System.out.println("Arquivo criado com sucesso.");
-            return;
+    public void salvaDadosCsv(String nome){
+        System.out.println("==================================================================");
+        System.out.println("Selecione o que deseja salvar: ");
+        System.out.println("[1] - Espaçonaves");
+        System.out.println("[2] - Espaço-portos");
+        System.out.println("[3] - Transportes");
+        System.out.println("==================================================================");
+        int opcao = Integer.parseInt(in.nextLine());
 
+        switch (opcao) {
+            case 1 -> {
+                if (c.salvaNaves(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
+            case 2 -> {
+                if (c.salvaEspacoPorto(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
+            case 3 -> {
+                if (c.salvaTransporte(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
         }
-        System.out.println("Não foi possível criar o arquivo.");
+
     }
-    public void salvaDadosXML(){
-        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
-        String nome;
-        nome = in.nextLine();
+
+    public void salvaDadosXML(String nome){
         if(c.salvaDadosArquivoXML(nome)) {
             System.out.println("Arquivo criado com sucesso.");
             return;
 
         }
         System.out.println("Não foi possível criar o arquivo.");
-
     }
 
     public void cadastraEspacoNave() {
@@ -176,7 +204,6 @@ public class ACMESpace {
                 System.out.println("Voltando para o menu...");
                 menu();
             }
-
         }
     }
 
