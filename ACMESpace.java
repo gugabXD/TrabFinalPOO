@@ -74,7 +74,7 @@ public class ACMESpace {
             case 2 -> salvaDadosXML(nome);
             case 3 -> {
                 salvaDadosCsv(nome);
-                salvaDadosXML(nome);
+                salvaDadosXML(nome + "(1)");
             }
             default -> menu();
         }
@@ -86,6 +86,7 @@ public class ACMESpace {
         System.out.println("[1] - Espaçonaves");
         System.out.println("[2] - Espaço-portos");
         System.out.println("[3] - Transportes");
+        System.out.println("[4] - Salva todos os dados.");
         System.out.println("==================================================================");
         int opcao = Integer.parseInt(in.nextLine());
 
@@ -111,6 +112,15 @@ public class ACMESpace {
                 }
                 System.out.println("Não foi possível criar o arquivo");
             }
+            case 4 -> {
+                if (c.salvaTransporte(nome) && c.salvaNaves(nome + "(1)") && c.salvaEspacoPorto(nome + "(2)")) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+
+            }
+            default -> menu();
         }
 
     }
