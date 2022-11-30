@@ -49,4 +49,11 @@ public class Espaconave{
         transporteAtual = null;
     }
 
+    public String toString() {
+        return "";
+    }
+    public void setLocalAtual(EspacoPorto e){
+        localAtual = e;
+    }
+
 }

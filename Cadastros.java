@@ -69,6 +69,18 @@ public class Cadastros {
         cadTransp.stream().forEach(t -> aux.add(t));
         return aux;
     }
+    public ArrayList<Espaconave> consultaESPNAVE(){
+        ArrayList<Espaconave> aux = new ArrayList<>();
+        if(cadEspNave.isEmpty()) return null;
+        cadEspNave.stream().forEach(t -> aux.add(t));
+        return aux;
+    }
+    public ArrayList<EspacoPorto> consultaESPPORTO(){
+        ArrayList<EspacoPorto> aux = new ArrayList<>();
+        if(cadEspPort.isEmpty()) return null;
+        cadEspPort.stream().forEach(t -> aux.add(t));
+        return aux;
+    }
 
     public boolean salvaNaves(String nomeArquivo){
         String linha = "";
@@ -176,7 +188,20 @@ public class Cadastros {
             if(e.setTransporte(t)) return true;
         }
         return false;
-        //Falta remover o transporte da fila de pendentes.
+    }
+    //removendo o transporte que esta incorretamente na fila de pendentes
+    public void removePendente(Transporte t){
+        Queue<Transporte> aux = new LinkedList();
+        Transporte temp = null;
+        while(!filaPendente.isEmpty()){
+            temp = filaPendente.poll();
+            if(temp==t) temp = filaPendente.poll();
+            aux.add(temp);
+        }
+        while(temp!=null){
+            temp = aux.poll();
+            filaPendente.add(temp);
+        }
     }
 
     public boolean finalizaTransporte(Transporte t){
@@ -189,6 +214,15 @@ public class Cadastros {
         return false;
     }
 
+    public boolean addPendente(Transporte t){
+        return filaPendente.add(t);
+    }
+
+    public void setLocalNovo(Transporte t){
+        for(Espaconave e: cadEspNave){
+            if(e.getTransporte()==t) e.setLocalAtual(t.getDestino());
+        }
+    }
 }
 
 

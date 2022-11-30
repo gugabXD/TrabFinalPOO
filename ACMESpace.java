@@ -312,6 +312,7 @@ public class ACMESpace {
             System.out.println("Erro. Transporte inexistente.");
             return;
         }
+        t.toString();
         String estado = t.getEstado();
         if(estado.equals("CANCELADO") || t.getEstado().equals("FINALIZADO")) {
             System.out.println("Erro. Estado imutável.");
@@ -328,6 +329,7 @@ public class ACMESpace {
             switch(opcao){
                 case 1-> {
                     if(c.associar(t)){
+                        c.removePendente(t);
                         System.out.print("Transporte iniciado com sucesso");
                     }
                     else System.out.println("Erro. Não há naves disponíveis no momento");
@@ -346,16 +348,23 @@ public class ACMESpace {
             System.out.println("TRANSPORTE EM ANDAMENTO");
             System.out.println("Escolha o novo estado do transporte (ou um valor diferente para cancelar a operação)");
             System.out.println("[1] - FINALIZADO");
-            System.out.println("[2] - CANCELADO");
+            System.out.println("[2] - PENDENTE");
+            System.out.println("[3] - CANCELADO");
             System.out.println("===============");
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
                 case 1-> {
                     t.setEstado(4);
                     System.out.println("Transporte finalizado com sucesso.");
+                    c.setLocalNovo(t);
                     c.finalizaTransporte(t);
                 }
                 case 2-> {
+                    t.setEstado(1);
+                    System.out.println("Transporte novamente pendente");
+                    c.addPendente(t);
+                }
+                case 3-> {
                     t.setEstado(2);
                     System.out.println("Transporte cancelado.");
                     c.finalizaTransporte(t);
@@ -371,6 +380,23 @@ public class ACMESpace {
         ArrayList<Transporte> lista = c.consultaTransp();
         if(lista==null){
             System.out.println("Erro. Não há nenhum transporte cadastrado");
+            return;
+        }
+        lista.stream().forEach(t -> System.out.println(t));
+    }
+    public void consultaESPNAVE(){
+        ArrayList<Espaconave> lista = c.consultaESPNAVE();
+        if(lista==null){
+            System.out.println("Erro. Não há nenhuma Espaçonave cadastrada");
+            return;
+        }
+        lista.stream().forEach(t -> System.out.println(t));
+    }
+
+    public void consultaESPPORTO(){
+        ArrayList<EspacoPorto> lista = c.consultaESPPORTO();
+        if(lista==null){
+            System.out.println("Erro. Não há nenhum Espaço-Porto cadastrado");
             return;
         }
         lista.stream().forEach(t -> System.out.println(t));
@@ -427,6 +453,7 @@ public class ACMESpace {
         EspacoPorto esp = new EspacoPorto(Integer.parseInt(res[0]), res[1], Double.parseDouble(res[2]), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
         boolean resultado = c.cadastraEspaçoPort(esp);
         if(!resultado) System.out.println("Erro. Identificador repetido");
+        consultaESPPORTO();
     }
     public void lerESPNAVE (String linha){
         String[] res = linha.split(";", 0);
@@ -436,6 +463,7 @@ public class ACMESpace {
         else nave = new NaveFTL(res[1], c.procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
         boolean resultado = c.cadastraEspNav(nave);
         if(!resultado) System.out.println("Erro. Essa nave já existe.");
+        consultaESPNAVE();
     }
 
     public void lerTRANSP (String linha){
@@ -446,5 +474,6 @@ public class ACMESpace {
         else transporte = new TransporteMaterial(Integer.parseInt(res[1]),c.procuraEspacoPorto(Integer.parseInt(res[2])),c.procuraEspacoPorto(Integer.parseInt(res[3])), res[5], Double.parseDouble(res[4]));
         boolean resultado = c.cadastraTransp(transporte);
         if(!resultado) System.out.println("Erro. Essa nave já existe.");
+        consultaTransp();
     }
 }

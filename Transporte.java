@@ -28,6 +28,7 @@ public abstract class Transporte {
 
     public abstract double calculaCusto();
 
+    public abstract double getCarga();
     public abstract String toString();
 
     public EspacoPorto getDestino() {

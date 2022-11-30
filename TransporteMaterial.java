@@ -46,4 +46,10 @@ public class TransporteMaterial extends Transporte{
                 //if(getEstado()!="PENDENTE") s+= getNave().toString();
         return s;
     }
+
+    @Override
+    public double getCarga() {
+        return carga;
+    }
+
 }
