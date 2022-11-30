@@ -14,6 +14,10 @@ public class Main {
     //C:\Users\João\Desktop\Navess
 }   //C:\Users\João\Desktop\jogo
 
-// C:\Users\João\Desktop\TESTE-espaconaves (2).dat
-// C:\Users\João\Desktop\TESTE-transportes.dat
-//C:\Users\João\Desktop\TESTE-espacoportos.dat
+    // C:\Users\João\Desktop\TESTE-espaconaves (2).dat
+    // C:\Users\João\Desktop\TESTE-transportes.dat
+    //C:\Users\João\Desktop\TESTE-espacoportos.dat
+
+    //C:\Users\João\Desktop\TTT
+    //C:\Users\João\Desktop\NNN
+    //C:\Users\João\Desktop\EP

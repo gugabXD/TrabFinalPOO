@@ -89,9 +89,9 @@ public class ACMESpace {
         int opcao = Integer.parseInt(in.nextLine());
 
         switch(opcao){
-            case 1 -> Cadastros.getInstance().leituraNavesJSON(local);
-            case 2 -> Cadastros.getInstance().leituraEspacoPorto(local);
-            case 3 -> Cadastros.getInstance().leituraTransporte(local);
+            case 1 -> menu();
+            case 2 -> menu();
+            case 3 -> menu();
             default -> leArquivoCSV(local);
         }
 
@@ -142,7 +142,7 @@ public class ACMESpace {
 
     public void salvaDadosCsv(String nome){
         System.out.println("==================================================================");
-        System.out.println("Selecione o que deseja salvar: ");
+        System.out.println("Selecione o que deseja salvar no arquivo DAT: ");
         System.out.println("[1] - Espaçonaves");
         System.out.println("[2] - Espaço-portos");
         System.out.println("[3] - Transportes");
@@ -187,7 +187,7 @@ public class ACMESpace {
 
     public void salvaDadosXML(String nome){
         System.out.println("==================================================================");
-        System.out.println("Selecione o que deseja salvar: ");
+        System.out.println("Selecione o que deseja salvar no arquivo JSON: ");
         System.out.println("[1] - Espaçonaves");
         System.out.println("[2] - Espaço-portos");
         System.out.println("[3] - Transportes");
