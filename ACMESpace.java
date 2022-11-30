@@ -205,11 +205,11 @@ public class ACMESpace {
                     System.out.println("Velocidade máxima inserida é maior que o limite, portanto foi definida como 0.3 Warp");
                 }
 
-                System.out.printf("=======================================");
+                System.out.println("=======================================");
                 System.out.println("Por favor, escolha o tipo de combustível");
                 System.out.println("[1] - Íon");
                 System.out.println("[2] - Nuclear");
-                System.out.printf("=======================================");
+                System.out.println("=======================================");
                 int opcao = Integer.parseInt(in.nextLine());
                 String combustivel;
                 switch(opcao){
