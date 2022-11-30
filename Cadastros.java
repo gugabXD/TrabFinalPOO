@@ -1,15 +1,23 @@
 package TrabFinalPOO;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
 
 public class Cadastros {
     private ArrayList<Espaconave> cadEspNave;
     private ArrayList<Transporte> cadTransp;
     private ArrayList<EspacoPorto> cadEspPort;
+    Scanner in = new Scanner(System.in);
 
     private Queue<Transporte> filaPendente;
 
@@ -20,9 +28,171 @@ public class Cadastros {
         filaPendente = new LinkedList<>();
     }
 
-    public void precadastraTerra() {
-        EspacoPorto Terra = new EspacoPorto(0, "Terra", 0, 0, 0);
-        cadEspPort.add(Terra);
+
+    public void leituraEspaconave(String local){
+        Path path = Paths.get(local);
+
+        try {
+            BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] aux = line.split(";");
+                //"tipo;nome;espacoporto;velocidade;combustivel_limite"
+                String tipo;
+                String nome;
+                String espacoporto;
+                String velocidade;
+                String combustivel_limite;
+
+                tipo = aux[0];
+                nome = aux[1];
+                espacoporto = aux[2];
+                velocidade = aux[3];
+                combustivel_limite = aux[4];
+
+                double vel = Double.parseDouble(velocidade);
+                int numero = Integer.parseInt(espacoporto);
+
+                if(procuraEspacoPorto(numero) == null) {
+                    numero = 0;
+                }
+
+                if(tipo.equalsIgnoreCase("1")) {
+                    NaveSubluz n = new NaveSubluz(nome, procuraEspacoPorto(numero), vel ,combustivel_limite );
+                    cadEspNave.add(n);
+                }
+
+                if(tipo.equalsIgnoreCase("2")) {
+                    double limite = Double.parseDouble(combustivel_limite);
+                    NaveFTL n = new NaveFTL(nome, procuraEspacoPorto(numero), vel, limite);
+                    cadEspNave.add(n);
+                }
+
+            }
+            reader.close();
+        }
+        catch (IOException e) {
+            System.out.println("===================================");
+            System.out.println("ERRO! Arquivo não encontrado.");
+            System.out.println("===================================");
+            in.nextLine();
+        }
+        catch(NumberFormatException e ){
+            System.out.println("===================================");
+            System.out.println("ERRO! Formato de dados incorreto.");
+            System.out.println("===================================");
+            in.nextLine();
+        }
+        System.out.println("Pronto!");
+    }
+
+    public void leituraEspacoPorto(String local){
+        Path path = Paths.get(local);
+
+        try {
+            BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] aux = line.split(";");
+                //"numero;nome;cordx;cordy;cordz""
+                String numero;
+                String nome;
+                String cordx;
+                String cordy;
+                String cordz;
+
+                numero = aux[0];
+                nome = aux[1];
+                cordx = aux[2];
+                cordy = aux[3];
+                cordz = aux[4];
+
+                int num = Integer.parseInt(numero);
+                double cx = Double.parseDouble(cordx);
+                double cy = Double.parseDouble(cordy);
+                double cz = Double.parseDouble(cordz);
+
+
+                EspacoPorto esp = new EspacoPorto(num, nome, cx, cy,cz);
+                cadEspPort.add(esp);
+
+            }
+            reader.close();
+        }
+        catch (IOException e) {
+            System.out.println("===================================");
+            System.out.println("ERRO! Arquivo não encontrado.");
+            System.out.println("===================================");
+            in.nextLine();
+        }
+        catch(NumberFormatException e ){
+            System.out.println("===================================");
+            System.out.println("ERRO! Formato de dados incorreto.");
+            System.out.println("===================================");
+            in.nextLine();
+        }
+        System.out.println("Pronto!");
+    }
+
+    public void leituraTransporte(String local){
+        Path path = Paths.get(local);
+
+        try {
+            BufferedReader reader = Files.newBufferedReader(path, Charset.defaultCharset());
+            reader.readLine();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] aux = line.split(";");
+                //"tipo;identificador;origem;destino;descricao;pessoas_carga""
+                String tipo;
+                String identificador;
+                String origem;
+                String destino;
+                String descricao;
+                String pessoas_carga;
+
+                tipo = aux[0];
+                identificador = aux[1];
+                origem = aux[2];
+                destino = aux[3];
+                descricao = aux[4];
+                pessoas_carga = aux[5];
+
+
+                int id = Integer.parseInt(identificador);
+                int orig = Integer.parseInt(origem);
+                int dest = Integer.parseInt(destino);
+                //1 = pessoas
+                if(tipo.equalsIgnoreCase("1")){
+                    int quantpess = Integer.parseInt(pessoas_carga);
+                    TransportePessoas tp = new TransportePessoas(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), quantpess );
+                    cadTransp.add(tp);
+
+                }
+                if(tipo.equalsIgnoreCase("2")){
+                    double carg = Double.parseDouble(pessoas_carga);
+                    TransporteMaterial tm = new TransporteMaterial(id,procuraEspacoPorto(orig), procuraEspacoPorto(dest), descricao, carg);
+                    cadTransp.add(tm);
+                }
+
+            }
+            reader.close();
+        }
+        catch (IOException e) {
+            System.out.println("===================================");
+            System.out.println("ERRO! Arquivo não encontrado.");
+            System.out.println("===================================");
+            in.nextLine();
+        }
+        catch(NumberFormatException e ){
+            System.out.println("===================================");
+            System.out.println("ERRO! Formato de dados incorreto.");
+            System.out.println("===================================");
+            in.nextLine();
+        }
+        System.out.println("Pronto!");
     }
 
     public boolean cadastraEspNav(Espaconave e) {
@@ -94,11 +264,11 @@ public class Cadastros {
             bf.write("tipo;nome;espacoporto;velocidade;combustivel_limite"+ "\n");
             for (Espaconave p : cadEspNave) {
                 if(p instanceof NaveSubluz){
-                    linha = ("1" + p.geraResumo() + "\n");
+                    linha = ("1" + ";" + p.geraResumo() + "\n");
                     bf.write(linha);
                     break;
                 }
-                linha = ("2" + p.geraResumo() + "\n");
+                linha = ("2"+ ";" + p.geraResumo() + "\n");
                 bf.write(linha);
             }
             bf.close();
@@ -135,11 +305,11 @@ public class Cadastros {
             bf.write("tipo;identificador;origem;destino;descricao;pessoas_carga" + "\n");
             for (Transporte p : cadTransp) {
                 if(p instanceof TransportePessoas){
-                    linha = ("1" + p.geraResumo() + "\n");
+                    linha = ("1" + ";" + p.geraResumo() + "\n");
                     bf.write(linha);
                     break;
                 }
-                linha = ("2" + p.geraResumo() + "\n");
+                linha = ("2" + ";" + p.geraResumo() + "\n");
                 bf.write(linha);
             }
             bf.close();

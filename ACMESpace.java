@@ -49,11 +49,49 @@ public class ACMESpace {
             case 6-> carregaDados();
             case 7-> designaTransp();
             case 8-> salvaDados();
-            case 9-> fazer();
+            case 9-> carregarDados();
         }
     }
     public void fazer(){
         //só pros case nao encher o saco com erro xD xD
+    }
+
+    public void carregarDados(){
+        System.out.println("Por favor, insira o local do arquivo.");
+        String local;
+        local = in.nextLine();
+
+        System.out.println("======================================================");
+        System.out.println("Por favor, insira o tipo de arquivo que irá ser lido");
+        System.out.println("[1] - CSV ");
+        System.out.println("[2] - XML ");
+        System.out.println("======================================================");
+        int opcao = Integer.parseInt(in.nextLine());
+
+        switch(opcao){
+
+            case 1 -> leArquivoCSV(local);
+            default -> carregarDados();
+        }
+
+    }
+
+    public void leArquivoCSV(String local) {
+        System.out.println("====================================");
+        System.out.println("Por favor insira o que deseja inserir:");
+        System.out.println("[1] - Espaçonaves");
+        System.out.println("[2] - Espaço-portos");
+        System.out.println("[3] - Transportes");
+        System.out.println("====================================");
+        int opcao = Integer.parseInt(in.nextLine());
+
+        switch(opcao){
+            case 1 -> c.leituraEspaconave(local);
+            case 2 -> c.leituraEspacoPorto(local);
+            case 3 -> c.leituraTransporte(local);
+            default -> leArquivoCSV(local);
+        }
+
     }
 
     public void salvaDados(){
