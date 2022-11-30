@@ -13,22 +13,21 @@ public class Cadastros {
 
     private Queue<Transporte> filaPendente;
 
-    public Cadastros(){
+    public Cadastros() {
         cadEspNave = new ArrayList<>();
         cadTransp = new ArrayList<>();
         cadEspPort = new ArrayList<>();
         filaPendente = new LinkedList<>();
-        precadastraTerra();
     }
 
-    public void precadastraTerra(){
-        EspacoPorto Terra = new EspacoPorto(0, "Terra", 0, 0, 0 );
-        cadEspPort.add (Terra);
+    public void precadastraTerra() {
+        EspacoPorto Terra = new EspacoPorto(0, "Terra", 0, 0, 0);
+        cadEspPort.add(Terra);
     }
 
-    public boolean cadastraEspNav(Espaconave e){
-        for(Espaconave p : cadEspNave){
-            if(p.getNome().equalsIgnoreCase(e.getNome())){
+    public boolean cadastraEspNav(Espaconave e) {
+        for (Espaconave p : cadEspNave) {
+            if (p.getNome().equalsIgnoreCase(e.getNome())) {
                 return false;
             }
         }
@@ -36,18 +35,18 @@ public class Cadastros {
         return true;
     }
 
-   public boolean cadastraTransp(Transporte t){
-        for(Transporte transp: cadTransp){
-            if(t.getIdentificador()==transp.getIdentificador()) return false;
+    public boolean cadastraTransp(Transporte t) {
+        for (Transporte transp : cadTransp) {
+            if (t.getIdentificador() == transp.getIdentificador()) return false;
         }
         cadTransp.add(t);
         filaPendente.add(t);
         return true;
     }
 
-    public boolean cadastraEspaçoPort(EspacoPorto e){
-        for(EspacoPorto p : cadEspPort){
-            if (p.getNumero() == e.getNumero()){
+    public boolean cadastraEspaçoPort(EspacoPorto e) {
+        for (EspacoPorto p : cadEspPort) {
+            if (p.getNumero() == e.getNumero()) {
                 return false;
 
             }
@@ -56,28 +55,33 @@ public class Cadastros {
         return true;
     }
 
-    public EspacoPorto procuraEspacoPorto(int identificador){
-        for(EspacoPorto e: cadEspPort){
-            if(e.getNumero()==identificador) return e;
+    public EspacoPorto procuraEspacoPorto(int identificador) {
+        for (EspacoPorto e : cadEspPort) {
+            if (e.getNumero() == identificador) return e;
         }
         return null;
     }
 
-    public ArrayList<Transporte> consultaTransp(){
+    public ArrayList<Transporte> consultaTransp() {
+        if (cadTransp.isEmpty()) return null;
         ArrayList<Transporte> aux = new ArrayList<>();
-        if(cadTransp.isEmpty()) return null;
+        if (cadTransp.isEmpty()) return null;
         cadTransp.stream().forEach(t -> aux.add(t));
         return aux;
     }
-    public ArrayList<Espaconave> consultaESPNAVE(){
+
+    public ArrayList<Espaconave> consultaESPNAVE() {
+        if (cadEspNave.isEmpty()) return null;
         ArrayList<Espaconave> aux = new ArrayList<>();
-        if(cadEspNave.isEmpty()) return null;
+        if (cadEspNave.isEmpty()) return null;
         cadEspNave.stream().forEach(t -> aux.add(t));
         return aux;
     }
-    public ArrayList<EspacoPorto> consultaESPPORTO(){
+
+    public ArrayList<EspacoPorto> consultaESPPORTO() {
+        if (cadEspPort.isEmpty()) return null;
         ArrayList<EspacoPorto> aux = new ArrayList<>();
-        if(cadEspPort.isEmpty()) return null;
+        if (cadEspPort.isEmpty()) return null;
         cadEspPort.stream().forEach(t -> aux.add(t));
         return aux;
     }
@@ -85,25 +89,24 @@ public class Cadastros {
     public boolean salvaDadosArquivoCSV(String nomeArquivo) {
         String linha = "";
 
-        try{
+        try {
             FileWriter arq = new FileWriter(nomeArquivo);
             BufferedWriter bf = new BufferedWriter(arq);
-            for(EspacoPorto p : cadEspPort){
+            for (EspacoPorto p : cadEspPort) {
                 linha = (p.geraResumo() + "\n");
                 bf.write(linha);
             }
-            for(Espaconave e : cadEspNave){
+            for (Espaconave e : cadEspNave) {
                 linha = (e.geraResumo() + "\n");
                 bf.write(linha);
             }
-            for(Transporte t : cadTransp){
+            for (Transporte t : cadTransp) {
                 linha = (t.geraResumo() + "\n");
                 bf.write(linha);
             }
             bf.close();
             return true;
-        }
-        catch (Exception e ){
+        } catch (Exception e) {
             System.out.println("Não foi possível criar o arquivo.");
             return false;
         }
@@ -112,64 +115,53 @@ public class Cadastros {
     public boolean salvaDadosArquivoXML(String nomeArquivo) {
         String linha = "";
 
-        try{
+        try {
             FileWriter arq = new FileWriter(nomeArquivo);
             BufferedWriter bf = new BufferedWriter(arq);
             bf.write("-<EspacoPorto>" + "\n");
-            for(EspacoPorto p : cadEspPort){
+            for (EspacoPorto p : cadEspPort) {
                 linha = (p.geraResumoXML() + "\n");
                 bf.write(linha);
             }
             bf.write("-<Espaconave>" + "\n");
-            for(Espaconave e : cadEspNave){
+            for (Espaconave e : cadEspNave) {
                 linha = (e.geraResumoXML() + "\n");
                 bf.write(linha);
             }
             bf.write("-<Transporte>" + "\n");
-            for(Transporte t : cadTransp){
+            for (Transporte t : cadTransp) {
                 linha = (t.geraResumoXML() + "\n");
                 bf.write(linha);
             }
             bf.close();
             return true;
-        }
-        catch (Exception e ){
+        } catch (Exception e) {
             System.out.println("Não foi possível criar o arquivo.");
             return false;
         }
     }
 
-    public Transporte procuraTransp(int ident){
-        for(Transporte t: cadTransp){
-            if(t.getIdentificador()==ident) return t;
+    public Transporte procuraTransp(int ident) {
+        for (Transporte t : cadTransp) {
+            if (t.getIdentificador() == ident) return t;
         }
         return null;
     }
 
-    public boolean associar(Transporte t){
-        for(Espaconave e: cadEspNave){
-            if(e.setTransporte(t)) return true;
+    public boolean associar(Transporte t) {
+        for (Espaconave e : cadEspNave) {
+            if (e.setTransporte(t)) return true;
         }
         return false;
     }
-    //removendo o transporte que esta incorretamente na fila de pendentes
-    public void removePendente(Transporte t){
-        Queue<Transporte> aux = new LinkedList();
-        Transporte temp = null;
-        while(!filaPendente.isEmpty()){
-            temp = filaPendente.poll();
-            if(temp==t) temp = filaPendente.poll();
-            aux.add(temp);
-        }
-        while(temp!=null){
-            temp = aux.poll();
-            filaPendente.add(temp);
-        }
+
+    public void removePendente(Transporte t) {
+        filaPendente.remove(t);
     }
 
-    public boolean finalizaTransporte(Transporte t){
-        for(Espaconave e: cadEspNave){
-            if(e.getTransporte()==t){
+    public boolean finalizaTransporte(Transporte t) {
+        for (Espaconave e : cadEspNave) {
+            if (e.getTransporte() == t) {
                 e.removeTransporte();
                 return true;
             }
@@ -177,14 +169,20 @@ public class Cadastros {
         return false;
     }
 
-    public boolean addPendente(Transporte t){
+    public boolean addPendente(Transporte t) {
         return filaPendente.add(t);
     }
 
-    public void setLocalNovo(Transporte t){
-        for(Espaconave e: cadEspNave){
-            if(e.getTransporte()==t) e.setLocalAtual(t.getDestino());
+    public void setLocalNovo(Transporte t) {
+        for (Espaconave e : cadEspNave) {
+            if (e.getTransporte() == t) e.setLocalAtual(t.getDestino());
         }
+    }
+
+    public boolean designaTransp() {
+        if (filaPendente.isEmpty()) return false;
+        filaPendente.removeIf(t -> associar(t));
+        return true;
     }
 }
 
