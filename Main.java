@@ -5,4 +5,7 @@ public class Main {
         ACMESpace s = new ACMESpace();
         s.executa();
     }
+    //C:\Users\USER\Downloads\TESTE-espacoportos
+    //C:\Users\USER\Downloads\TESTE-transportes
+    //C:\Users\USER\Downloads\TESTE-espaconaves
 }

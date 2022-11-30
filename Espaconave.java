@@ -55,5 +55,9 @@ public class Espaconave{
     public void setLocalAtual(EspacoPorto e){
         localAtual = e;
     }
-
+    public Queue<Transporte> getHistorico() {
+        Queue<Transporte> aux = new LinkedList<>();
+        aux.addAll(historico);
+        return aux;
+    }
 }

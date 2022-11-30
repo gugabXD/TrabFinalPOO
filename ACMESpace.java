@@ -47,7 +47,7 @@ public class ACMESpace {
             case 4-> consultaTransp();
             case 5-> alteraEstado();
             case 6-> carregaDados();
-            case 7-> fazer();
+            case 7-> designaTransp();
             case 8-> salvaDados();
             case 9-> fazer();
         }
@@ -439,18 +439,22 @@ public class ACMESpace {
                     linha = leitor.readLine();
                     if (linha == null) break;
                     lerESPPORT(linha);
+                    consultaESPPORTO();
                  } }
                 case 2-> { while (true) {
                     linha = leitor.readLine();
                     if (linha == null) break;
                     lerESPNAVE(linha);
+                    consultaESPNAVE();
                 } }
                 case 3-> { while (true) {
                     linha = leitor.readLine();
                     if (linha == null) break;
                     lerTRANSP(linha);
+                    consultaTransp();
                 } }
             }
+            leitor.close();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -463,7 +467,6 @@ public class ACMESpace {
         EspacoPorto esp = new EspacoPorto(Integer.parseInt(res[0]), res[1], Double.parseDouble(res[2]), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
         boolean resultado = c.cadastraEspaçoPort(esp);
         if(!resultado) System.out.println("Erro. Identificador repetido");
-        consultaESPPORTO();
     }
     public void lerESPNAVE (String linha){
         String[] res = linha.split(";", 0);
@@ -473,7 +476,6 @@ public class ACMESpace {
         else nave = new NaveFTL(res[1], c.procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
         boolean resultado = c.cadastraEspNav(nave);
         if(!resultado) System.out.println("Erro. Essa nave já existe.");
-        consultaESPNAVE();
     }
 
     public void lerTRANSP (String linha){
@@ -484,6 +486,11 @@ public class ACMESpace {
         else transporte = new TransporteMaterial(Integer.parseInt(res[1]),c.procuraEspacoPorto(Integer.parseInt(res[2])),c.procuraEspacoPorto(Integer.parseInt(res[3])), res[5], Double.parseDouble(res[4]));
         boolean resultado = c.cadastraTransp(transporte);
         if(!resultado) System.out.println("Erro. Essa nave já existe.");
-        consultaTransp();
+    }
+
+    public void designaTransp(){
+        boolean res = c.designaTransp();
+        if(!res) System.out.println("Erro. Não há transportes pendentes.");
+        else System.out.println("Todos as espaçonaves aptas foram designadas aos respectivos transportes.");
     }
 }

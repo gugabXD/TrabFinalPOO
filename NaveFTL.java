@@ -1,5 +1,7 @@
 package TrabFinalPOO;
 
+import java.util.Queue;
+
 public class NaveFTL extends Espaconave{
     private double vmaxWarp;
     private double maxCarga;
@@ -28,7 +30,14 @@ public class NaveFTL extends Espaconave{
         Transporte t = getTransporte();
         if(t!=null) s+= "\n Transportando carga de "+t.getOrigem().getNome()+" a "+t.getDestino().getNome();
         else s+= "\n Localizado em " +getLocalAtual().getNome();
-        s+="Com velocidade máxima de "+vmaxWarp+" Warp e carga máxima de "+maxCarga+"pessoas ou toneladas de material";
+        s+="\nCom velocidade máxima de "+vmaxWarp+" Warp e carga máxima de "+maxCarga+"pessoas ou toneladas de material.";
+        Queue<Transporte> historico = getHistorico();
+        if(!historico.isEmpty()) {
+            s+="\nEssa nave possui em seu histórico os transportes: ";
+                    for(Transporte transp: historico){
+                        s+= transp.getIdentificador()+"; ";
+                    }
+        }
         return s;
     }
 }
