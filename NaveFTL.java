@@ -9,8 +9,8 @@ public class NaveFTL extends Espaconave{
 
     public NaveFTL(String nome, EspacoPorto localAtual, double vmaxWarp, double maxCarga){
         super(nome, localAtual);
-        this.vmaxWarp = vmaxWarp;
-        this.maxCarga = maxCarga;
+        this.vmaxWarp = Math.abs(vmaxWarp);
+        this.maxCarga = Math.abs(maxCarga);
     }
 
     @Override
@@ -26,11 +26,11 @@ public class NaveFTL extends Espaconave{
     }
     @Override
     public String toString(){
-        String s = "Espaçonave FTL de nome "+getNome();
+        String s = "\nEspaçonave FTL de nome "+getNome();
         Transporte t = getTransporte();
-        if(t!=null) s+= "\n Transportando carga de "+t.getOrigem().getNome()+" a "+t.getDestino().getNome();
-        else s+= "\n Localizado em " +getLocalAtual().getNome();
-        s+="\nCom velocidade máxima de "+vmaxWarp+" Warp e carga máxima de "+maxCarga+"pessoas ou toneladas de material.";
+        if(t!=null) s+= "\nTransportando carga de "+t.getOrigem().getNome()+" a "+t.getDestino().getNome();
+        else s+= "\nLocalizado em " +getLocalAtual().getNome();
+        s+="\nCom velocidade máxima de "+vmaxWarp+" Warp e carga máxima de "+maxCarga+" pessoas ou toneladas de material.";
         Queue<Transporte> historico = getHistorico();
         if(!historico.isEmpty()) {
             s+="\nEssa nave possui em seu histórico os transportes: ";

@@ -27,7 +27,7 @@ public class Cadastros {
         cadEspPort = new ArrayList<>();
         filaPendente = new LinkedList<>();
     }
-
+    
 
     public void leituraEspaconave(String local){
         Path path = Paths.get(local);
@@ -136,7 +136,7 @@ public class Cadastros {
         System.out.println("Pronto!");
     }
 
-    public void leituraTransporte(String local){
+    public void leituraTransporte(String local) {
         Path path = Paths.get(local);
 
         try {
@@ -165,34 +165,38 @@ public class Cadastros {
                 int orig = Integer.parseInt(origem);
                 int dest = Integer.parseInt(destino);
                 //1 = pessoas
-                if(tipo.equalsIgnoreCase("1")){
+                if (tipo.equalsIgnoreCase("1")) {
                     int quantpess = Integer.parseInt(pessoas_carga);
-                    TransportePessoas tp = new TransportePessoas(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), quantpess );
+                    TransportePessoas tp = new TransportePessoas(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), quantpess);
                     cadTransp.add(tp);
 
                 }
-                if(tipo.equalsIgnoreCase("2")){
+                if (tipo.equalsIgnoreCase("2")) {
                     double carg = Double.parseDouble(pessoas_carga);
-                    TransporteMaterial tm = new TransporteMaterial(id,procuraEspacoPorto(orig), procuraEspacoPorto(dest), descricao, carg);
+                    TransporteMaterial tm = new TransporteMaterial(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), descricao, carg);
                     cadTransp.add(tm);
                 }
 
             }
             reader.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("===================================");
             System.out.println("ERRO! Arquivo não encontrado.");
             System.out.println("===================================");
             in.nextLine();
-        }
-        catch(NumberFormatException e ){
+        } catch (NumberFormatException e) {
             System.out.println("===================================");
             System.out.println("ERRO! Formato de dados incorreto.");
             System.out.println("===================================");
             in.nextLine();
         }
         System.out.println("Pronto!");
+    }
+
+    public void precadastraTerra() {
+        EspacoPorto Terra = new EspacoPorto(11, "Terra", 0, 0, 0);
+        cadEspPort.add(Terra);
+
     }
 
     public boolean cadastraEspNav(Espaconave e) {
@@ -235,15 +239,19 @@ public class Cadastros {
     public ArrayList<Transporte> consultaTransp() {
         if (cadTransp.isEmpty()) return null;
         ArrayList<Transporte> aux = new ArrayList<>();
-        if (cadTransp.isEmpty()) return null;
         cadTransp.stream().forEach(t -> aux.add(t));
         return aux;
     }
 
+    public ArrayList<Transporte> consultaFilaPendente() {
+        if (filaPendente.isEmpty()) return null;
+        ArrayList<Transporte> aux = new ArrayList<>();
+        filaPendente.stream().forEach(t -> aux.add(t));
+        return aux;
+    }
     public ArrayList<Espaconave> consultaESPNAVE() {
         if (cadEspNave.isEmpty()) return null;
         ArrayList<Espaconave> aux = new ArrayList<>();
-        if (cadEspNave.isEmpty()) return null;
         cadEspNave.stream().forEach(t -> aux.add(t));
         return aux;
     }
@@ -251,7 +259,6 @@ public class Cadastros {
     public ArrayList<EspacoPorto> consultaESPPORTO() {
         if (cadEspPort.isEmpty()) return null;
         ArrayList<EspacoPorto> aux = new ArrayList<>();
-        if (cadEspPort.isEmpty()) return null;
         cadEspPort.stream().forEach(t -> aux.add(t));
         return aux;
     }
@@ -358,7 +365,10 @@ public class Cadastros {
 
     public boolean associar(Transporte t) {
         for (Espaconave e : cadEspNave) {
-            if (e.setTransporte(t)) return true;
+            if (e.setTransporte(t)) {
+                t.setEstado(3);
+                return true;
+            }
         }
         return false;
     }

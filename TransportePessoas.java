@@ -5,7 +5,7 @@ public class TransportePessoas extends Transporte{
 
     public TransportePessoas(int identificador, EspacoPorto origem, EspacoPorto destino, int quantPessoas){
         super(identificador, origem, destino);
-        this.quantPessoas = quantPessoas;
+        this.quantPessoas = Math.abs(quantPessoas);
     }
     @Override
     public double calculaDistancia() {
@@ -37,11 +37,10 @@ public class TransportePessoas extends Transporte{
     }
     @Override
     public String toString() {
-        String s = "Transporte de pessoas para "+quantPessoas+"\n"+
-                "De origem em: "+getOrigem().toString()+"E destino em: "+getDestino().toString()+
-                "Distancia de "+getDistancia()+" anos luz e custo de "+calculaCusto()+" C$\n"+
+        String s = "Transporte de pessoas para "+quantPessoas+", de número "+getIdentificador()+"\n"+
+                "De origem em: "+getOrigem().toString()+"\nE destino em: "+getDestino().toString()+
+                "\nDistancia de "+getDistancia()+" anos luz e custo de "+calculaCusto()+" C$\n"+
                 "Estado: "+getEstado()+"\n";
-        //if(getEstado()!="PENDENTE") s+= getNave().toString();
         return s;
     }
 
