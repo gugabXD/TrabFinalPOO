@@ -57,79 +57,154 @@ public class ACMESpace {
     }
 
     public void salvaDados(){
+        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
+        String nome;
+        nome = in.nextLine();
+
         System.out.println("==================================================================");
-        System.out.println("Por favor, selecione qual formato gostaria de salvar o aqruivo.");
+        System.out.println("Por favor, selecione qual formato gostaria de salvar o arquivo.");
         System.out.println("[1] - CSV");
-        System.out.println("[2] - XML ");
+        System.out.println("[2] - XML");
+        System.out.println("[3] - CSV e XMl");
         System.out.println("==================================================================");
         int opcao = Integer.parseInt(in.nextLine());
 
-        if(opcao==1){
-            salvaDadosCsv();
-        }
-        if(opcao==2){
-            salvaDadosXML();
+        switch (opcao){
+            case 1 -> salvaDadosCsv(nome);
+            case 2 -> salvaDadosXML(nome);
+            case 3 -> {
+                salvaDadosCsv(nome);
+                salvaDadosXML(nome);
+            }
+            default -> menu();
         }
     }
 
-    public void salvaDadosCsv(){
-        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
-        String nome;
-        nome = in.nextLine();
-        if(c.salvaDadosArquivoCSV(nome)) {
-            System.out.println("Arquivo criado com sucesso.");
-            return;
+    public void salvaDadosCsv(String nome){
+        System.out.println("==================================================================");
+        System.out.println("Selecione o que deseja salvar: ");
+        System.out.println("[1] - Espaçonaves");
+        System.out.println("[2] - Espaço-portos");
+        System.out.println("[3] - Transportes");
+        System.out.println("==================================================================");
+        int opcao = Integer.parseInt(in.nextLine());
 
+        switch (opcao) {
+            case 1 -> {
+                if (c.salvaNaves(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
+            case 2 -> {
+                if (c.salvaEspacoPorto(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
+            case 3 -> {
+                if (c.salvaTransporte(nome)) {
+                    System.out.println("Arquivo criado com sucesso");
+                    break;
+                }
+                System.out.println("Não foi possível criar o arquivo");
+            }
         }
-        System.out.println("Não foi possível criar o arquivo.");
+
     }
-    public void salvaDadosXML(){
-        System.out.println("Por favor, insira o nome que deseja colocar no arquivo.");
-        String nome;
-        nome = in.nextLine();
+
+    public void salvaDadosXML(String nome){
         if(c.salvaDadosArquivoXML(nome)) {
             System.out.println("Arquivo criado com sucesso.");
             return;
 
         }
         System.out.println("Não foi possível criar o arquivo.");
-
     }
 
-    public void cadastraEspacoNave(){
+    public void cadastraEspacoNave() {
         System.out.println("Por favor insira o nome da espaçonave:");
         String nome = in.nextLine();
         System.out.println("Por favor insira o número identificador do espaço-porto em que a nave está");
         int espPorto = Integer.parseInt(in.nextLine());
 
-        System.out.println("Por favor insira o tipo da espaçonave:");
-        System.out.println("[1] - Nave FTL Carga");
-        if(c.procuraEspacoPorto(espPorto)==null){
+        if (c.procuraEspacoPorto(espPorto) == null) {
             System.out.println("=============================================================================");
-            System.out.println("Nenhum Espaço-porto encontrado com esse nome, deseja cadastrar como Terra?");
+            System.out.println("Nenhum Espaço-porto encontrado com esse numero, deseja cadastrar como Terra?");
             System.out.println("[1] - Sim.");
             System.out.println("[2] - Não.");
             System.out.println("=============================================================================");
             int opção = Integer.parseInt(in.nextLine());
 
-            if(opção==1){
-                Espaconave e = new Espaconave(nome , c.procuraEspacoPorto(0));
-                if(!c.cadastraEspNav(e)){
-                    System.out.println("Espaçonave já existente.");
+
+            switch (opção) {
+                case 1 -> trataEspaconave(nome, 0);
+                default -> {
+                    System.out.println("Voltando para o menu...");
+                    menu();
+                }
+            }
+            return;
+        }
+        trataEspaconave(nome, espPorto);
+    }
+
+
+
+    public void trataEspaconave(String nome, int numeroesp) {
+        System.out.println("=============================================");
+        System.out.println("Por favor insira o tipo da espaçonave:");
+        System.out.println("[1] - Nave FTL");
+        System.out.println("[2] - Nave Subluz");
+        System.out.println("==============================================");
+
+        int a = Integer.parseInt(in.nextLine());
+
+        switch (a) {
+            case 1 -> {
+
+                System.out.println("Por favor insira a velocidade máxima Warp.");
+                double velocidade = Double.parseDouble(in.nextLine());
+
+                System.out.println("Por favor insira a quantidade máxima de pessoas ou de carga. ");
+                double quantidade = Double.parseDouble(in.nextLine());
+
+                NaveFTL n = new NaveFTL(nome, c.procuraEspacoPorto(numeroesp), velocidade, quantidade);
+
+                if(!c.cadastraEspNav(n)){
+                    System.out.println("Espaçonave já existe.");
                     return;
                 }
-                System.out.println("Espaço-porto cadastrado como Terra.");
-                return;
+                System.out.println("Espaçonave criada com sucesso.");
+
             }
-            System.out.println("Voltando para o menu...");
-            return;
+            case 2 -> {
+                System.out.println("Por favor insira a velocidade máxima de impulso (limite 0.3 Warp)");
+                double velocidadeimp = Double.parseDouble(in.nextLine());
+
+                if(velocidadeimp > 0.3){
+                    velocidadeimp = 0.3;
+                    System.out.println("Velocidade máxima inserida é maior que o limite, portanto foi definida como 0.3 Warp");
+                }
+
+                System.out.println("Por favor insira o tipo de combustível.");
+                String combustivel = in.nextLine();
+
+                NaveSubluz s = new NaveSubluz(nome, c.procuraEspacoPorto(numeroesp), velocidadeimp, combustivel);
+
+                if(!c.cadastraEspNav(s)){
+                    System.out.println("Espaçonave já existe.");
+                    return;
+                }
+                System.out.println("Espaçonave criada com sucesso.");
+            }
+            default -> {
+                System.out.println("Voltando para o menu...");
+                menu();
+            }
         }
-        Espaconave e = new Espaconave(nome, c.procuraEspacoPorto(espPorto));
-        if(!c.cadastraEspNav(e)){
-            System.out.println("Erro. Espaçonave já existente.");
-            return;
-        }
-        System.out.println("Espaço-porto cadastrado com sucesso");
     }
 
     public void cadastraEspacoPorto(){

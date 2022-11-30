@@ -38,6 +38,10 @@ public class Espaconave{
         return transporteAtual;
     }
 
+    public EspacoPorto getLocalAtual(){
+        return localAtual;
+    }
+
     public boolean setTransporte(Transporte t){
         return false;
     }
@@ -48,13 +52,9 @@ public class Espaconave{
     public String toString() {
         return "";
     }
-    public EspacoPorto getLocalAtual() {
-        return localAtual;
-    }
     public void setLocalAtual(EspacoPorto e){
         localAtual = e;
     }
-
     public Queue<Transporte> getHistorico() {
         Queue<Transporte> aux = new LinkedList<>();
         aux.addAll(historico);

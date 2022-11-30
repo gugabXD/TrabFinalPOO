@@ -17,7 +17,7 @@ public class TransportePessoas extends Transporte{
 
     @Override
     public String geraResumo(){
-        return getIdentificador()+ ";" + getOrigem().getNome()+ ";" + getDestino().getNome() + quantPessoas + ";";
+        return getIdentificador()+ ";" + getOrigem().getNome()+ ";" + getDestino().getNome() + "-" +  quantPessoas + ";";
     }
 
     @Override
