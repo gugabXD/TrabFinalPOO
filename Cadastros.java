@@ -27,7 +27,7 @@ public class Cadastros {
         cadEspPort = new ArrayList<>();
         filaPendente = new LinkedList<>();
     }
-    
+
 
     public void leituraEspaconave(String local){
         Path path = Paths.get(local);
@@ -168,13 +168,13 @@ public class Cadastros {
                 if (tipo.equalsIgnoreCase("1")) {
                     int quantpess = Integer.parseInt(pessoas_carga);
                     TransportePessoas tp = new TransportePessoas(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), quantpess);
-                    cadTransp.add(tp);
+                    cadastraTransp(tp);
 
                 }
                 if (tipo.equalsIgnoreCase("2")) {
                     double carg = Double.parseDouble(pessoas_carga);
                     TransporteMaterial tm = new TransporteMaterial(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), descricao, carg);
-                    cadTransp.add(tm);
+                    cadastraTransp(tm);;
                 }
 
             }
@@ -273,10 +273,11 @@ public class Cadastros {
                 if(p instanceof NaveSubluz){
                     linha = ("1" + ";" + p.geraResumo() + "\n");
                     bf.write(linha);
-                    break;
                 }
-                linha = ("2"+ ";" + p.geraResumo() + "\n");
-                bf.write(linha);
+                else {
+                    linha = ("2" + ";" + p.geraResumo() + "\n");
+                    bf.write(linha);
+                }
             }
             bf.close();
             return true;
@@ -314,10 +315,12 @@ public class Cadastros {
                 if(p instanceof TransportePessoas){
                     linha = ("1" + ";" + p.geraResumo() + "\n");
                     bf.write(linha);
-                    break;
+
                 }
-                linha = ("2" + ";" + p.geraResumo() + "\n");
-                bf.write(linha);
+                else {
+                    linha = ("2" + ";" + p.geraResumo() + "\n");
+                    bf.write(linha);
+                }
             }
             bf.close();
             return true;
