@@ -55,7 +55,9 @@ public class ACMESpace {
 
         }
     }
-
+    public void fazer(){
+        //só pros case nao encher o saco com erro xD xD
+    }
 
     public void carregarDados(){
         System.out.println("Por favor, insira o local do arquivo.");
@@ -64,7 +66,7 @@ public class ACMESpace {
 
         System.out.println("======================================================");
         System.out.println("Por favor, insira o tipo de arquivo que irá ser lido");
-        System.out.println("[1] - CSV ");
+        System.out.println("[1] - DAT ");
         System.out.println("[2] - JSON ");
         System.out.println("======================================================");
         int opcao = Integer.parseInt(in.nextLine());
@@ -121,7 +123,7 @@ public class ACMESpace {
 
         System.out.println("==================================================================");
         System.out.println("Por favor, selecione qual formato gostaria de salvar o arquivo.");
-        System.out.println("[1] - CSV");
+        System.out.println("[1] - DAT");
         System.out.println("[2] - JSON");
         System.out.println("[3] - CSV e JSON");
         System.out.println("==================================================================");
@@ -595,7 +597,7 @@ public class ACMESpace {
         Espaconave nave;
         if(tipo==1) nave = new NaveSubluz(res[1],Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), res[4]);
         else nave = new NaveFTL(res[1], Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
-        boolean resultado =Cadastros.getInstance().cadastraEspNav(nave);
+        boolean resultado = Cadastros.getInstance().cadastraEspNav(nave);
         if(!resultado) System.out.println("Erro. Essa nave já existe.");
     }
 

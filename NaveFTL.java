@@ -23,7 +23,7 @@ public class NaveFTL extends Espaconave{
 
     @Override
     public String geraResumo(){
-        return getNome() + ";" + getLocalAtual().getNumero() + ";" + vmaxWarp + ";" + maxCarga + ";";
+        return getNome() + ":" + getLocalAtual().getNumero() + ":" + vmaxWarp + ":" + maxCarga ;
     }
 
     @Override

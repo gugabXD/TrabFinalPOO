@@ -21,7 +21,7 @@ public class NaveSubluz extends Espaconave{
     }
     @Override
     public String geraResumo(){
-        return getNome() + ";" + getLocalAtual().getNumero() + ";" + vmaxImpulso + ";" + combustivel + ";";
+        return getNome() + ":" + getLocalAtual().getNumero() + ":" + vmaxImpulso + ":" + combustivel;
     }
 
     @Override

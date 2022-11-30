@@ -11,7 +11,7 @@ public class TransporteMaterial extends Transporte{
     }
     @Override
     public String geraResumo(){
-        return getIdentificador()+ ";" + getOrigem().getNumero()+ ";" + getDestino().getNumero() + ";"+ descricao + ";" + carga;
+        return getIdentificador()+ ":" + getOrigem().getNumero()+ ":" + getDestino().getNumero() + ":"+ carga + ":" + descricao;
     }
     @Override
     public String geraResumoXML(){

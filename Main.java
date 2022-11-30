@@ -2,7 +2,6 @@ package TrabFinalPOO;
 
 public class Main {
     public static void main(String args[]){
-        MainFrame mf = new MainFrame();
         ACMESpace s = new ACMESpace();
         s.executa();
     }
@@ -10,13 +9,10 @@ public class Main {
     //C:\Users\USER\Downloads\TESTE-espaconaves
     //C:\Users\USER\Downloads\TESTE-transportes
 
-    //C:\Users\João\Desktop\EspPor
-    //C:\Users\João\Desktop\Naves
-    //C:\Users\João\Desktop\Transporte
+    //C:\Users\João\Desktop\Arroz
+    //C:\Users\João\Desktop\Navess
+}   //C:\Users\João\Desktop\jogo
 
-   // C:\Users\João\Desktop\EspPort
-    // C:\Users\João\Desktop\Naves
-
-//transporte, nave, espacoporto
-    //C:\Users\João\Desktop\meudeus
-}
+// C:\Users\João\Desktop\TESTE-espaconaves (2).dat
+// C:\Users\João\Desktop\TESTE-transportes.dat
+//C:\Users\João\Desktop\TESTE-espacoportos.dat

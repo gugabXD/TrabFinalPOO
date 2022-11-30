@@ -20,7 +20,7 @@ public class EspacoPorto {
     }
 
     public String geraResumo(){
-        return numero + ";" + nome + ";" + coordX + ";" + coordY + ";" + coordZ + ";";
+        return numero + ":" + nome + ":" + coordX + ":" + coordY + ":" + coordZ ;
     }
 
     public String geraResumoXML(){
