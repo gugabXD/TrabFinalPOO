@@ -44,4 +44,14 @@ public class Espaconave{
     public void removeTransporte(){
         transporteAtual = null;
     }
+
+    public String toString() {
+        return "";
+    }
+    public EspacoPorto getLocalAtual() {
+        return localAtual;
+    }
+    public void setLocalAtual(EspacoPorto e){
+        localAtual = e;
+    }
 }

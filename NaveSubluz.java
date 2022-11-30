@@ -15,4 +15,13 @@ public class NaveSubluz extends Espaconave{
         setTransporteAtual(t);
         return true;
     }
+    @Override
+    public String toString(){
+        String s = "Espaçonave Subluz de nome "+getNome();
+        Transporte t = getTransporte();
+        if(t!=null) s+= "\n Transportando carga de "+t.getOrigem().getNome()+" a "+t.getDestino().getNome();
+        else s+= "\n Localizado em " +getLocalAtual().getNome();
+        s+="Com velocidade máxima de "+vmaxImpulso+" Warp. Utiliza " +combustivel+" como combustível.";
+        return s;
+    }
 }
