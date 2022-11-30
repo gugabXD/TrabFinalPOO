@@ -24,11 +24,21 @@ public class Cadastros {
 
     private Queue<Transporte> filaPendente;
 
-    public Cadastros() {
+    private Cadastros(){
         cadEspNave = new ArrayList<>();
         cadTransp = new ArrayList<>();
         cadEspPort = new ArrayList<>();
         filaPendente = new LinkedList<>();
+    }
+
+    private static Cadastros c = null;
+
+    public static Cadastros getInstance()
+    {
+
+        if (c== null)
+            c = new Cadastros();
+        return c;
     }
 
 

@@ -2,6 +2,7 @@ package TrabFinalPOO;
 
 public class Main {
     public static void main(String args[]){
+        MainFrame mf = new MainFrame();
         ACMESpace s = new ACMESpace();
         s.executa();
     }

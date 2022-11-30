@@ -8,12 +8,10 @@ import java.util.Scanner;
 
 public class ACMESpace {
     private Scanner in;
-    private Cadastros c;
     public ACMESpace(){
         in = new Scanner(System.in);
     }
     public void executa(){
-        c = new Cadastros();
         menu();
     }
     public void menu(){
@@ -57,9 +55,7 @@ public class ACMESpace {
 
         }
     }
-    public void fazer(){
-        //só pros case nao encher o saco com erro xD xD
-    }
+
 
     public void carregarDados(){
         System.out.println("Por favor, insira o local do arquivo.");
@@ -91,9 +87,9 @@ public class ACMESpace {
         int opcao = Integer.parseInt(in.nextLine());
 
         switch(opcao){
-            case 1 -> c.leituraNavesJSON(local);
-            case 2 -> c.leituraEspacoPorto(local);
-            case 3 -> c.leituraTransporte(local);
+            case 1 -> Cadastros.getInstance().leituraNavesJSON(local);
+            case 2 -> Cadastros.getInstance().leituraEspacoPorto(local);
+            case 3 -> Cadastros.getInstance().leituraTransporte(local);
             default -> leArquivoCSV(local);
         }
 
@@ -110,9 +106,9 @@ public class ACMESpace {
         int opcao = Integer.parseInt(in.nextLine());
 
         switch(opcao){
-            case 1 -> c.leituraEspaconave(local);
-            case 2 -> c.leituraEspacoPorto(local);
-            case 3 -> c.leituraTransporte(local);
+            case 1 -> Cadastros.getInstance().leituraEspaconave(local);
+            case 2 -> Cadastros.getInstance().leituraEspacoPorto(local);
+            case 3 -> Cadastros.getInstance().leituraTransporte(local);
             default -> leArquivoCSV(local);
         }
 
@@ -154,28 +150,28 @@ public class ACMESpace {
 
         switch (opcao) {
             case 1 -> {
-                if (c.salvaNaves(nome)) {
+                if (Cadastros.getInstance().salvaNaves(nome)) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
                 System.out.println("Não foi possível criar o arquivo");
             }
             case 2 -> {
-                if (c.salvaEspacoPorto(nome)) {
+                if (Cadastros.getInstance().salvaEspacoPorto(nome)) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
                 System.out.println("Não foi possível criar o arquivo");
             }
             case 3 -> {
-                if (c.salvaTransporte(nome)) {
+                if (Cadastros.getInstance().salvaTransporte(nome)) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
                 System.out.println("Não foi possível criar o arquivo");
             }
             case 4 -> {
-                if (c.salvaTransporte(nome) && c.salvaNaves(nome + "(1)") && c.salvaEspacoPorto(nome + "(2)")) {
+                if (Cadastros.getInstance().salvaTransporte(nome) && Cadastros.getInstance().salvaNaves(nome + "(1)") && Cadastros.getInstance().salvaEspacoPorto(nome + "(2)")) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
@@ -199,28 +195,28 @@ public class ACMESpace {
 
         switch (opcao) {
             case 1 -> {
-                if (c.salvaNavesJson(nome)) {
+                if (Cadastros.getInstance().salvaNavesJson(nome)) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
                 System.out.println("Não foi possível criar o arquivo");
             }
             case 2 -> {
-                if (c.salvaEspPortJson(nome)) {
+                if (Cadastros.getInstance().salvaEspPortJson(nome)) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
                 System.out.println("Não foi possível criar o arquivo");
             }
             case 3 -> {
-                if (c.salvaTranspJson(nome)) {
+                if (Cadastros.getInstance().salvaTranspJson(nome)) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
                 System.out.println("Não foi possível criar o arquivo");
             }
             case 4 -> {
-                if (c.salvaTranspJson(nome) && c.salvaNavesJson(nome + "(1)") && c.salvaEspPortJson(nome + "(2)")) {
+                if (Cadastros.getInstance().salvaTranspJson(nome) && Cadastros.getInstance().salvaNavesJson(nome + "(1)") && Cadastros.getInstance().salvaEspPortJson(nome + "(2)")) {
                     System.out.println("Arquivo criado com sucesso");
                     break;
                 }
@@ -237,7 +233,7 @@ public class ACMESpace {
         System.out.println("Por favor insira o número identificador do espaço-porto em que a nave está");
         int espPorto = Integer.parseInt(in.nextLine());
 
-        if (c.procuraEspacoPorto(espPorto) == null) {
+        if (Cadastros.getInstance().procuraEspacoPorto(espPorto) == null) {
             System.out.println("=============================================================================");
             System.out.println("Nenhum Espaço-porto encontrado com esse numero, deseja cadastrar como Terra?");
             System.out.println("[1] - Sim.");
@@ -248,7 +244,7 @@ public class ACMESpace {
 
             switch (opção) {
                 case 1 -> {
-                    if(c.procuraEspacoPorto(11)==null) c.precadastraTerra();
+                    if(Cadastros.getInstance().procuraEspacoPorto(11)==null) Cadastros.getInstance().precadastraTerra();
                     trataEspaconave(nome,     11);
                 }
                 default -> {
@@ -281,9 +277,9 @@ public class ACMESpace {
                 System.out.println("Por favor insira a quantidade máxima de pessoas ou de carga. ");
                 double quantidade = Double.parseDouble(in.nextLine());
 
-                NaveFTL n = new NaveFTL(nome, c.procuraEspacoPorto(numeroesp), velocidade, quantidade);
+                NaveFTL n = new NaveFTL(nome, Cadastros.getInstance().procuraEspacoPorto(numeroesp), velocidade, quantidade);
 
-                if(!c.cadastraEspNav(n)){
+                if(!Cadastros.getInstance().cadastraEspNav(n)){
                     System.out.println("Espaçonave já existe.");
                     return;
                 }
@@ -313,9 +309,9 @@ public class ACMESpace {
                         return;
                     }
                 }
-                NaveSubluz s = new NaveSubluz(nome, c.procuraEspacoPorto(numeroesp), velocidadeimp, combustivel);
+                NaveSubluz s = new NaveSubluz(nome, Cadastros.getInstance().procuraEspacoPorto(numeroesp), velocidadeimp, combustivel);
 
-                if(!c.cadastraEspNav(s)){
+                if(!Cadastros.getInstance().cadastraEspNav(s)){
                     System.out.println("Espaçonave já existe.");
                     return;
                 }
@@ -343,7 +339,7 @@ public class ACMESpace {
 
         EspacoPorto e = new EspacoPorto(numero, nome, x , y , z );
 
-        if(!c.cadastraEspaçoPort(e)){
+        if(!Cadastros.getInstance().cadastraEspaçoPort(e)){
             System.out.println("Erro. Espaço-Porto já existente.");
             return;
         }
@@ -354,7 +350,7 @@ public class ACMESpace {
     public void cadastraTransp(){
         System.out.println("Insira o identificador do transporte");
         int ident = Integer.parseInt(in.nextLine());
-        if(c.procuraTransp(ident)!=null){
+        if(Cadastros.getInstance().procuraTransp(ident)!=null){
             System.out.println("Erro. Transporte já existente.");
             return;
         }
@@ -374,14 +370,14 @@ public class ACMESpace {
     public void cadastraTranspP(int ident){
         System.out.println("Insira o número do Espaço-Porto de origem");
         int o = Integer.parseInt(in.nextLine());
-        EspacoPorto origem = c.procuraEspacoPorto(o);
+        EspacoPorto origem = Cadastros.getInstance().procuraEspacoPorto(o);
         if(origem==null){
             System.out.println("Erro. Origem inválida");
             return;
         }
         System.out.println("Insira o número do Espaço-Porto de destino");
         int d = Integer.parseInt(in.nextLine());
-        EspacoPorto destino = c.procuraEspacoPorto(d);
+        EspacoPorto destino = Cadastros.getInstance().procuraEspacoPorto(d);
         if(destino==null){
             System.out.println("Erro. Destino inválido");
             return;
@@ -393,21 +389,21 @@ public class ACMESpace {
         System.out.println("Insira a quantidade de pessoas transportadas");
         int quantPessoas = Integer.parseInt(in.nextLine());
         Transporte tp = new TransportePessoas(ident, origem, destino, quantPessoas);
-        c.cadastraTransp(tp);
+        Cadastros.getInstance().cadastraTransp(tp);
         System.out.println("Transporte cadastrado com sucesso!");
         System.out.println(tp);
     }
     public void cadastraTranspM(int ident){
         System.out.println("Insira o número do Espaço-Porto de origem");
         int o = Integer.parseInt(in.nextLine());
-        EspacoPorto origem = c.procuraEspacoPorto(o);
+        EspacoPorto origem = Cadastros.getInstance().procuraEspacoPorto(o);
         if(origem==null){
             System.out.println("Erro. Origem inválida");
             return;
         }
         System.out.println("Insira o número do Espaço-Porto de destino");
         int d = Integer.parseInt(in.nextLine());
-        EspacoPorto destino = c.procuraEspacoPorto(d);
+        EspacoPorto destino = Cadastros.getInstance().procuraEspacoPorto(d);
         if(destino==null){
             System.out.println("Erro. Destino inválido");
             return;
@@ -421,7 +417,7 @@ public class ACMESpace {
         System.out.println("Insira a carga em toneladas de material a ser transportado");
         double carga = Double.parseDouble(in.nextLine());
         Transporte tm = new TransporteMaterial(ident, origem, destino, descricao, carga);
-        c.cadastraTransp(tm);
+        Cadastros.getInstance().cadastraTransp(tm);
         System.out.println("Transporte cadastrado com sucesso!");
         System.out.println(tm);
     }
@@ -430,7 +426,7 @@ public class ACMESpace {
         consultaTransp();
         System.out.println("Insira o identificador do transporte");
         int ident = Integer.parseInt(in.nextLine());
-        Transporte t = c.procuraTransp(ident);
+        Transporte t = Cadastros.getInstance().procuraTransp(ident);
         if(t==null){
             System.out.println("Erro. Transporte inexistente.");
             return;
@@ -451,15 +447,15 @@ public class ACMESpace {
             int opcao = Integer.parseInt(in.nextLine());
             switch(opcao){
                 case 1-> {
-                    if(c.associar(t)){
-                        c.removePendente(t);
+                    if(Cadastros.getInstance().associar(t)){
+                        Cadastros.getInstance().removePendente(t);
                         System.out.println("Transporte iniciado com sucesso");
                     }
                     else System.out.println("Erro. Não há naves disponíveis no momento");
                 }
                 case 2-> {
                     t.setEstado(2);
-                    c.removePendente(t);
+                    Cadastros.getInstance().removePendente(t);
                     System.out.println("Transporte cancelado.");
                 }
                 default -> {
@@ -480,18 +476,18 @@ public class ACMESpace {
                 case 1-> {
                     t.setEstado(4);
                     System.out.println("Transporte finalizado com sucesso.");
-                    c.setLocalNovo(t);
-                    c.finalizaTransporte(t);
+                    Cadastros.getInstance().setLocalNovo(t);
+                    Cadastros.getInstance().finalizaTransporte(t);
                 }
                 case 2-> {
                     t.setEstado(1);
                     System.out.println("Transporte novamente pendente");
-                    c.addPendente(t);
+                    Cadastros.getInstance().addPendente(t);
                 }
                 case 3-> {
                     t.setEstado(2);
                     System.out.println("Transporte cancelado.");
-                    c.finalizaTransporte(t);
+                    Cadastros.getInstance().finalizaTransporte(t);
                 }
                 default -> {
                     System.out.println("Opção inválida. Operação cancelada.");
@@ -501,7 +497,7 @@ public class ACMESpace {
 
     }
     public void consultaTransp(){
-        ArrayList<Transporte> lista = c.consultaTransp();
+        ArrayList<Transporte> lista = Cadastros.getInstance().consultaTransp();
         if(lista==null){
             System.out.println("Erro. Não há nenhum transporte cadastrado");
             return;
@@ -509,7 +505,7 @@ public class ACMESpace {
         lista.stream().forEach(t -> System.out.println(t));
     }
     public void consultaFilaPendente(){
-        ArrayList<Transporte> lista = c.consultaFilaPendente();
+        ArrayList<Transporte> lista = Cadastros.getInstance().consultaFilaPendente();
         if(lista==null){
             System.out.println("Erro. Não há nenhum transporte cadastrado");
             return;
@@ -517,7 +513,7 @@ public class ACMESpace {
         lista.stream().forEach(t -> System.out.println(t));
     }
     public void consultaESPNAVE(){
-        ArrayList<Espaconave> lista = c.consultaESPNAVE();
+        ArrayList<Espaconave> lista = Cadastros.getInstance().consultaESPNAVE();
         if(lista==null){
             System.out.println("Erro. Não há nenhuma Espaçonave cadastrada");
             return;
@@ -526,7 +522,7 @@ public class ACMESpace {
     }
 
     public void consultaESPPORTO(){
-        ArrayList<EspacoPorto> lista = c.consultaESPPORTO();
+        ArrayList<EspacoPorto> lista = Cadastros.getInstance().consultaESPPORTO();
         if(lista==null){
             System.out.println("Erro. Não há nenhum Espaço-Porto cadastrado");
             return;
@@ -590,16 +586,16 @@ public class ACMESpace {
     public void lerESPPORT(String linha){
         String[] res = linha.split(";", 0);
         EspacoPorto esp = new EspacoPorto(Integer.parseInt(res[0]), res[1], Double.parseDouble(res[2]), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
-        boolean resultado = c.cadastraEspaçoPort(esp);
+        boolean resultado = Cadastros.getInstance().cadastraEspaçoPort(esp);
         if(!resultado) System.out.println("Erro. Identificador repetido");
     }
     public void lerESPNAVE (String linha){
         String[] res = linha.split(";", 0);
         int tipo = Integer.parseInt(res[0]);
         Espaconave nave;
-        if(tipo==1) nave = new NaveSubluz(res[1],c.procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), res[4]);
-        else nave = new NaveFTL(res[1], c.procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
-        boolean resultado = c.cadastraEspNav(nave);
+        if(tipo==1) nave = new NaveSubluz(res[1],Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), res[4]);
+        else nave = new NaveFTL(res[1], Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
+        boolean resultado =Cadastros.getInstance().cadastraEspNav(nave);
         if(!resultado) System.out.println("Erro. Essa nave já existe.");
     }
 
@@ -607,14 +603,14 @@ public class ACMESpace {
         String[] res = linha.split(";", 0);
         int tipo = Integer.parseInt(res[0]);
         Transporte transporte;
-        if(tipo==1) transporte = new TransportePessoas(Integer.parseInt(res[1]),c.procuraEspacoPorto(Integer.parseInt(res[2])),c.procuraEspacoPorto(Integer.parseInt(res[3])), Integer.parseInt(res[4]) );
-        else transporte = new TransporteMaterial(Integer.parseInt(res[1]),c.procuraEspacoPorto(Integer.parseInt(res[2])),c.procuraEspacoPorto(Integer.parseInt(res[3])), res[5], Double.parseDouble(res[4]));
-        boolean resultado = c.cadastraTransp(transporte);
+        if(tipo==1) transporte = new TransportePessoas(Integer.parseInt(res[1]),Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])),Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[3])), Integer.parseInt(res[4]) );
+        else transporte = new TransporteMaterial(Integer.parseInt(res[1]),Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])),Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[3])), res[5], Double.parseDouble(res[4]));
+        boolean resultado = Cadastros.getInstance().cadastraTransp(transporte);
         if(!resultado) System.out.println("Erro. Essa nave já existe.");
     }
 
     public void designaTransp(){
-        boolean res = c.designaTransp();
+        boolean res = Cadastros.getInstance().designaTransp();
         if(!res) System.out.println("Erro. Não há transportes pendentes.");
         else System.out.println("Todos as espaçonaves aptas foram designadas aos respectivos transportes.");
     }
