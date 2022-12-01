@@ -586,13 +586,13 @@ public class ACMESpace {
         }
     }
     public void lerESPPORT(String linha){
-        String[] res = linha.split(";", 0);
+        String[] res = linha.split(":", 0);
         EspacoPorto esp = new EspacoPorto(Integer.parseInt(res[0]), res[1], Double.parseDouble(res[2]), Double.parseDouble(res[3]), Double.parseDouble(res[4]));
         boolean resultado = Cadastros.getInstance().cadastraEspaçoPort(esp);
         if(!resultado) System.out.println("Erro. Identificador repetido");
     }
     public void lerESPNAVE (String linha){
-        String[] res = linha.split(";", 0);
+        String[] res = linha.split(":", 0);
         int tipo = Integer.parseInt(res[0]);
         Espaconave nave;
         if(tipo==1) nave = new NaveSubluz(res[1],Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])), Double.parseDouble(res[3]), res[4]);
@@ -602,7 +602,7 @@ public class ACMESpace {
     }
 
     public void lerTRANSP (String linha){
-        String[] res = linha.split(";", 0);
+        String[] res = linha.split(":", 0);
         int tipo = Integer.parseInt(res[0]);
         Transporte transporte;
         if(tipo==1) transporte = new TransportePessoas(Integer.parseInt(res[1]),Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[2])),Cadastros.getInstance().procuraEspacoPorto(Integer.parseInt(res[3])), Integer.parseInt(res[4]) );
