@@ -1,0 +1,4 @@
+[{"VMax Impulso":0.1,"Espaço Porto":11,"Tipo":"1","Combustivel":"ion","Nome":"Alfa"},
+{"VMax Impulso":0.3,"Espaço Porto":33,"Tipo":"1","Combustivel":"nuclear","Nome":"Bravo"},
+{"MaxCarga":200.0,"Espaço Porto":22,"Tipo":"2","Nome":"Charlie","VMax Warp":2.1},
+{"MaxCarga":100.0,"Espaço Porto":44,"Tipo":"2","Nome":"Delta","VMax Warp":3.3}]

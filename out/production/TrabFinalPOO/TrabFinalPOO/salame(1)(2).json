@@ -1,0 +1,11 @@
+[{"Numero":11,"CordZ":0.0,"Nome":"Terra","CordX":0.0,"CordY":0.0},
+{"Numero":22,"CordZ":9.009E-6,"Nome":"Marte","CordX":-3.69002E-6,"CordY":8.453E-7},
+{"Numero":33,"CordZ":-2.2E-5,"Nome":"Venus","CordX":1.9E-5,"CordY":1.89E-5},
+{"Numero":44,"CordZ":5.4E-5,"Nome":"Ganimedes","CordX":3.4E-5,"CordY":-1.6E-5},
+{"Numero":55,"CordZ":-3.05,"Nome":"Alfa Centauri A","CordX":2.002,"CordY":2.4},
+{"Numero":66,"CordZ":1.0,"Nome":"Proxima Centauri","CordX":3.03,"CordY":2.8},
+{"Numero":77,"CordZ":8.10099,"Nome":"Epsilon Indi","CordX":7.01,"CordY":-5.0041},
+{"Numero":88,"CordZ":9.0099,"Nome":"Glise 412","CordX":-10.08,"CordY":8.7054},
+{"Numero":99,"CordZ":-5.14,"Nome":"Sirius","CordX":4.09,"CordY":5.52},
+{"Numero":111,"CordZ":12.381,"Nome":"Beta Hydri","CordX":15.0009,"CordY":-14.599},
+{"Numero":222,"CordZ":-55.9959,"Nome":"Gamma Ceti","CordX":-51.239,"CordY":26.8195}]

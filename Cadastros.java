@@ -212,6 +212,15 @@ public class Cadastros {
         System.out.println("Pronto!");
     }
 
+    public Espaconave procuraNomeNave(String nome){
+        for(Espaconave e : cadEspNave){
+            if(e.getNome().equalsIgnoreCase(nome)){
+                return e;
+            }
+        }
+        return null;
+    }
+
     public void leituraTransporte(String local) {
         Path path = Paths.get(local);
 
@@ -229,6 +238,7 @@ public class Cadastros {
                 String descricao;
                 String pessoas_carga;
                 String estado;
+                String nave;
 
                 tipo = aux[0];
                 identificador = aux[1];
@@ -259,7 +269,10 @@ public class Cadastros {
                     if(estado.equalsIgnoreCase("finalizado")){
                         tp.setEstado(4);
                     }
-
+                    if(!tp.isPendente()){
+                        nave = aux[6];
+                        tp.setNave(procuraNomeNave(nave));
+                    }
                     //1-pendente 2- cancelado 3- transportando 4- finalizado
 
                 }
@@ -280,6 +293,10 @@ public class Cadastros {
                     }
                     if(estado.equalsIgnoreCase("finalizado")){
                         tm.setEstado(4);
+                    }
+                    if(!tm.isPendente()){
+                        nave = aux[7];
+                        tm.setNave(procuraNomeNave(nave));
                     }
                 }
 
@@ -499,7 +516,7 @@ public class Cadastros {
         try {
             FileWriter arq = new FileWriter(nomeArquivo);
             BufferedWriter bf = new BufferedWriter(arq);
-            bf.write("tipo:identificador:origem:destino:pessoas_carga:descricao:estado" + "\n");
+            bf.write("tipo:identificador:origem:destino:pessoas_carga:descricao:estado:nave" + "\n");
             for (Transporte p : cadTransp) {
                 if(p instanceof TransportePessoas){
                     linha = ("1" + ":" + p.geraResumo() + "\n");
@@ -577,6 +594,7 @@ public class Cadastros {
     public boolean associar(Transporte t) {
         for (Espaconave e : cadEspNave) {
             if (e.setTransporte(t)) {
+                t.setNave(e);
                 t.setEstado(3);
                 return true;
             }

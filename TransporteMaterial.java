@@ -11,6 +11,9 @@ public class TransporteMaterial extends Transporte{
     }
     @Override
     public String geraResumo(){
+        if(!isPendente()) {
+            return getIdentificador()+ ":" + getOrigem().getNumero()+ ":" + getDestino().getNumero() + ":" + carga + ":" + descricao + ":" + getEstado() + ":" + getNave().getNome();
+        }
         return getIdentificador()+ ":" + getOrigem().getNumero()+ ":" + getDestino().getNumero() + ":"+ carga + ":" + descricao + ":" + getEstado();
     }
     @Override
@@ -42,11 +45,8 @@ public class TransporteMaterial extends Transporte{
         String s = "Transporte de material: "+descricao+ " com carga de "+carga+" toneladas"+", de número "+getIdentificador()+"\n"+
                 "De origem em: "+getOrigem().toString()+"\nE destino em: "+getDestino().toString()+
                 "\nDistancia de "+getDistancia()+" anos luz e custo de "+calculaCusto()+" C$\n"+
-                "Estado: "+ getEstado() +"\n";
-
-
-                //if(!isPendente()) s+= "Designado para a nave: "+
-
+                "Estado: "+getEstado()+"\n";
+                if(!isPendente()) s+= "Designado para a nave: " + getNave().getNome() +"\n";
         return s;
     }
 

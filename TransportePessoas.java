@@ -22,6 +22,9 @@ public class TransportePessoas extends Transporte{
 
     @Override
     public String geraResumo(){
+        if(!isPendente()) {
+            return getIdentificador()+ ":" + getOrigem().getNumero()+ ":" + getDestino().getNumero() + ":" + quantPessoas + ":" + getEstado() + ":" + getNave().getNome();
+       }
         return getIdentificador()+ ":" + getOrigem().getNumero()+ ":" + getDestino().getNumero() + ":" + quantPessoas + ":" + getEstado();
     }
 
@@ -46,6 +49,7 @@ public class TransportePessoas extends Transporte{
                 "De origem em: "+getOrigem().toString()+"\nE destino em: "+getDestino().toString()+
                 "\nDistancia de "+getDistancia()+" anos luz e custo de "+calculaCusto()+" C$\n"+
                 "Estado: "+getEstado()+"\n";
+        if(!isPendente()) s+= "Designado para a nave: " + getNave().getNome() + "\n";
         return s;
     }
 
