@@ -13,9 +13,17 @@ public class NaveFTL extends Espaconave{
         this.maxCarga = Math.abs(maxCarga);
     }
 
+    public double getMaxCarga() {
+        return maxCarga;
+    }
+
+    public double getVmaxWarp() {
+        return vmaxWarp;
+    }
+
     @Override
     public String geraResumo(){
-        return getNome() + ";" + getLocalAtual().getNumero() + ";" + vmaxWarp + ";" + maxCarga + ";";
+        return getNome() + ":" + getLocalAtual().getNumero() + ":" + vmaxWarp + ":" + maxCarga ;
     }
 
     @Override

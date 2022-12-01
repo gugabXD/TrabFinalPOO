@@ -12,9 +12,16 @@ public class NaveSubluz extends Espaconave{
         this.combustivel = combustivel;
     }
 
+    public double getVmaxImpulso() {
+        return vmaxImpulso;
+    }
+
+    public String getCombustivel(){
+        return combustivel;
+    }
     @Override
     public String geraResumo(){
-        return getNome() + ";" + getLocalAtual().getNumero() + ";" + vmaxImpulso + ";" + combustivel + ";";
+        return getNome() + ":" + getLocalAtual().getNumero() + ":" + vmaxImpulso + ":" + combustivel;
     }
 
     @Override
