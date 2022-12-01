@@ -58,4 +58,7 @@ public abstract class Transporte {
             case 4-> e = Estado.FINALIZADO;
         }
     }
+    public boolean isPendente(){
+        return e==Estado.PENDENTE;
+    }
 }
