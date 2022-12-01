@@ -7,6 +7,7 @@ public abstract class Transporte {
 
     private EspacoPorto destino;
     public double distancia;
+    private Espaconave designada;
 
     enum Estado {
         PENDENTE, TRANSPORTANDO, CANCELADO, FINALIZADO;
@@ -31,6 +32,12 @@ public abstract class Transporte {
     public abstract double getCarga();
     public abstract String toString();
 
+    public void setNave(Espaconave e){
+        designada = e;
+    }
+    public Espaconave getNave(){
+        return designada;
+    }
     public EspacoPorto getDestino() {
         return destino;
     }

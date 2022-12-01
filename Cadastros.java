@@ -545,6 +545,7 @@ public class Cadastros {
     public boolean associar(Transporte t) {
         for (Espaconave e : cadEspNave) {
             if (e.setTransporte(t)) {
+                t.setNave(e);
                 t.setEstado(3);
                 return true;
             }

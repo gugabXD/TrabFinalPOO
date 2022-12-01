@@ -485,6 +485,7 @@ public class ACMESpace {
                     t.setEstado(1);
                     System.out.println("Transporte novamente pendente");
                     Cadastros.getInstance().addPendente(t);
+                    t.setNave(null);
                 }
                 case 3-> {
                     t.setEstado(2);
