@@ -1,4 +1,0 @@
-[{"Tipo":"1","Destino":22,"Quantpessoas":100,"Id":111,"Origem":11,"Estado":"TRANSPORTANDO"},
-{"Tipo":"1","Destino":222,"Quantpessoas":200,"Id":222,"Origem":11,"Estado":"TRANSPORTANDO"},
-{"Tipo":"2","Carga":100.1,"Destino":33,"Id":333,"Origem":22,"Estado":"TRANSPORTANDO"},
-{"Tipo":"2","Carga":200.22,"Destino":55,"Id":444,"Origem":33,"Estado":"PENDENTE"}]
