@@ -221,19 +221,22 @@ public class Cadastros {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] aux = line.split(":");
-                //"tipo;identificador;origem;destino;descricao;pessoas_carga""
+                //"tipo;identificador;origem;destino;descricao;pessoas_carga:estado""
                 String tipo;
                 String identificador;
                 String origem;
                 String destino;
                 String descricao;
                 String pessoas_carga;
+                String estado;
 
                 tipo = aux[0];
                 identificador = aux[1];
                 origem = aux[2];
                 destino = aux[3];
                 pessoas_carga = aux[4];
+                estado = aux[5];
+
 
 
                 int id = Integer.parseInt(identificador);
@@ -244,6 +247,20 @@ public class Cadastros {
                     int quantpess = Integer.parseInt(pessoas_carga);
                     TransportePessoas tp = new TransportePessoas(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), quantpess);
                     cadastraTransp(tp);
+                    if(estado.equalsIgnoreCase("pendente")){
+                        tp.setEstado(1);
+                    }
+                    if(estado.equalsIgnoreCase("cancelado")){
+                        tp.setEstado(2);
+                    }
+                    if(estado.equalsIgnoreCase("transportando")){
+                        tp.setEstado(3);
+                    }
+                    if(estado.equalsIgnoreCase("finalizado")){
+                        tp.setEstado(4);
+                    }
+
+                    //1-pendente 2- cancelado 3- transportando 4- finalizado
 
                 }
                 if (tipo.equalsIgnoreCase("2")) {
@@ -251,6 +268,18 @@ public class Cadastros {
                     double carg = Double.parseDouble(pessoas_carga);
                     TransporteMaterial tm = new TransporteMaterial(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), descricao, carg);
                     cadastraTransp(tm);;
+                    if(estado.equalsIgnoreCase("pendente")){
+                        tm.setEstado(1);
+                    }
+                    if(estado.equalsIgnoreCase("cancelado")){
+                        tm.setEstado(2);
+                    }
+                    if(estado.equalsIgnoreCase("transportando")){
+                        tm.setEstado(3);
+                    }
+                    if(estado.equalsIgnoreCase("finalizado")){
+                        tm.setEstado(4);
+                    }
                 }
 
             }
@@ -469,7 +498,7 @@ public class Cadastros {
         try {
             FileWriter arq = new FileWriter(nomeArquivo);
             BufferedWriter bf = new BufferedWriter(arq);
-            bf.write("tipo:identificador:origem:destino:pessoas_carga:descricao" + "\n");
+            bf.write("tipo:identificador:origem:destino:pessoas_carga:descricao:estado" + "\n");
             for (Transporte p : cadTransp) {
                 if(p instanceof TransportePessoas){
                     linha = ("1" + ":" + p.geraResumo() + "\n");
@@ -499,6 +528,7 @@ public class Cadastros {
                 jsonObject.put("Origem", e.getOrigem().getNumero());
                 jsonObject.put("Destino", e.getDestino().getNumero());
                 jsonObject.put("Quantpessoas", ((TransportePessoas) e).getQuantPessoas());
+                jsonObject.put("Estado", e.getEstado());
 
                 json.add(jsonObject);
             }
@@ -508,6 +538,7 @@ public class Cadastros {
                 jsonObject.put("Origem", e.getOrigem().getNumero());
                 jsonObject.put("Destino", e.getDestino().getNumero());
                 jsonObject.put("Carga", e.getCarga());
+                jsonObject.put("Estado", e.getEstado());
 
                 json.add(jsonObject);
             }
