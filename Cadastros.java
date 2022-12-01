@@ -265,9 +265,10 @@ public class Cadastros {
                 }
                 if (tipo.equalsIgnoreCase("2")) {
                     descricao = aux[5];
+                    estado = aux[6];
                     double carg = Double.parseDouble(pessoas_carga);
                     TransporteMaterial tm = new TransporteMaterial(id, procuraEspacoPorto(orig), procuraEspacoPorto(dest), descricao, carg);
-                    cadastraTransp(tm);;
+                    cadastraTransp(tm);
                     if(estado.equalsIgnoreCase("pendente")){
                         tm.setEstado(1);
                     }

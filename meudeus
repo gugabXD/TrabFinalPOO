@@ -1,0 +1,5 @@
+tipo:identificador:origem:destino:pessoas_carga:descricao:estado
+1:111:11:22:100:TRANSPORTANDO
+1:222:11:222:200:TRANSPORTANDO
+2:333:22:33:100.1:Dilithium:TRANSPORTANDO
+2:444:33:55:200.22:Kyber cristal:PENDENTE
