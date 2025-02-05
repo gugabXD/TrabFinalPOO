@@ -1,12 +1,10 @@
-import TrabFinalPOO.ACMESpace;
-import TrabFinalPOO.Cadastros;
+import dell.Sistema;
+
 
 public class Main {
     public static void main(String args[]){
-        MainFrame mf = new MainFrame();
-        ACMESpace ac = new ACMESpace();
+        Sistema ac = new Sistema();
         ac.executa();
-
     }
 
 }
